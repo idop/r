@@ -1,0 +1,5 @@
+C:\t\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\Ex2_GameBoard\obj\Debug\Ex02_GameBoard.csprojResolveAssemblyReference.cache
+C:\t\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\Ex2_GameBoard\bin\Debug\Ex2_GameBoard.dll
+C:\t\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\Ex2_GameBoard\bin\Debug\Ex2_GameBoard.pdb
+C:\t\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\Ex2_GameBoard\obj\Debug\Ex2_GameBoard.dll
+C:\t\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\Ex2_GameBoard\obj\Debug\Ex2_GameBoard.pdb

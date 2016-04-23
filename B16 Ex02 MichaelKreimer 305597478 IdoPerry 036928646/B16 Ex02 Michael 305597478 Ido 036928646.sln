@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B16_Ex02", "B16_Ex02\B16_Ex
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ex02_UiManager", "UiManager\Ex02_UiManager.csproj", "{7537E075-6AC3-435B-840C-066604BD9C19}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ex02_GameBoard", "Ex2_GameBoard\Ex02_GameBoard.csproj", "{EECC6DB4-3666-4B49-A52F-D237E39B5EE0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{7537E075-6AC3-435B-840C-066604BD9C19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7537E075-6AC3-435B-840C-066604BD9C19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7537E075-6AC3-435B-840C-066604BD9C19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EECC6DB4-3666-4B49-A52F-D237E39B5EE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EECC6DB4-3666-4B49-A52F-D237E39B5EE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EECC6DB4-3666-4B49-A52F-D237E39B5EE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EECC6DB4-3666-4B49-A52F-D237E39B5EE0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,11 +4,12 @@ using System.Text;
 
 namespace B16_Ex02
 {
-    class Program
+    public class Program
     {
         public static void Main()
         {
-            GameManager.Start();
+            GameManager game = new GameManager();
+            game.Start();
         }
     }
 }

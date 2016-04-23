@@ -8,7 +8,7 @@ namespace B16_Ex02
     {
         public const int k_MinDimensitonSize = 4;
         public const int k_MaxDimensitonSize = 8;
-        private const char k_Space = ' ';
+        private const char k_EmptyPosition = ' ';
         private char[,] m_GameBoard;
 
         public GameBoard(int i, int j)
@@ -23,7 +23,7 @@ namespace B16_Ex02
             {
                 for(int j = 0; j < m_GameBoard.GetLength(1); ++j)
                 {
-                    m_GameBoard[i, j] = k_Space;
+                    m_GameBoard[i, j] = k_EmptyPosition;
                 }
             } 
         }

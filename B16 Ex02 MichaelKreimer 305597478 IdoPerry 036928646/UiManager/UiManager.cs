@@ -5,7 +5,6 @@ namespace B16_Ex02
 {
     public class UiManager
     {
-
         private const string k_Rows = "Rows";
         private const string k_Columns = "Columns";
         private string m_BoardHeader;
@@ -30,6 +29,7 @@ namespace B16_Ex02
             string requestMessage = "Please Choose the game mod. enter {0} for Player vs Player or {1} for Player vs Computer";
             string invlaidInputMessage = "invalid input please enter a nunmber between {0} and {1}";
             bool invalidInput = true;
+            Console.WriteLine(requestMessage, (byte)GameUtils.eGameMode.PlayerVsPlayer, (byte)GameUtils.eGameMode.PlayerVsAi);
             while (invalidInput)
             {
                 if (byte.TryParse(Console.ReadLine(), out input))
@@ -50,7 +50,7 @@ namespace B16_Ex02
                 }
                 else
                 {
-                    Console.WriteLine(invlaidInputMessage, (int)GameUtils.eGameMode.PlayerVsPlayer, (int)GameUtils.eGameMode.PlayerVsAi);
+                    Console.WriteLine(invlaidInputMessage, (byte)GameUtils.eGameMode.PlayerVsPlayer, (byte)GameUtils.eGameMode.PlayerVsAi);
                 }
             }
         }
@@ -74,6 +74,7 @@ namespace B16_Ex02
                     }
                 }
             }
+
             return result;
         }
 

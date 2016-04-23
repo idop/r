@@ -8,9 +8,10 @@ namespace B16_Ex02
         private GameBoard m_GameBoard;
         private UiManager m_UiManager = new UiManager();
         private GameUtils.eGameMode m_GameMode;
-        private int m_TurnNumber= 0;
+        private int m_TurnNumber = 0;
         private bool playerWantsToPlay = true;
-        Player[] m_Players;
+        private Player[] m_Players;
+
         public void Start()
         {
             init();
@@ -27,7 +28,7 @@ namespace B16_Ex02
 
         private void initializePlayers()
         {
-            //TODO
+             //TODO
         }
 
         private void initializeGameBoard()
@@ -36,6 +37,7 @@ namespace B16_Ex02
             m_UiManager.GetBoardDimensions(out rows, out columns);
             m_GameBoard = new GameBoard(rows, columns);
         }
+
         private void initializeGameMode()
         {
             m_UiManager.GetGameMode(ref m_GameMode);
@@ -49,6 +51,7 @@ namespace B16_Ex02
                 m_UiManager.RenderScreen(m_GameBoard);
                 checkBoardStatus();
             }
+
             startPlayerForfitAction();
         }
 

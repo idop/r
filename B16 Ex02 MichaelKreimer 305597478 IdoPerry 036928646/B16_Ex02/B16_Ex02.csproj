@@ -41,6 +41,10 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Ex02_GameUtils\Ex02_GameUtils.csproj">
+      <Project>{66ca8ab0-3e66-413f-a149-e7c94df86c18}</Project>
+      <Name>Ex02_GameUtils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Ex2_GameBoard\Ex02_GameBoard.csproj">
       <Project>{eecc6db4-3666-4b49-a52f-d237e39b5ee0}</Project>
       <Name>Ex02_GameBoard</Name>

@@ -5,43 +5,75 @@ namespace B16_Ex02
 {
     public class UiManager
     {
-        private const int k_MinDimensitonSize = 4;
-        private const int k_MaxDimensitonSize = 8;
+
         private const string k_Rows = "Rows";
         private const string k_Columns = "Columns";
         private string m_BoardHeader;
         private string m_SeperatorLine;
 
-        public void startGameBoardInitialization(out int o_Rows, out int o_Columns)
+        public void GetBoardDimensions(out int o_Rows, out int o_Columns)
         {
             string weclomeMessage = "Welcome to the 4 in a Row game.";
             string getDimenstionMessage = "Please enter the number of {2} you want to pay with (between {0} and {1})";
             Console.WriteLine(weclomeMessage);
-            Console.WriteLine(getDimenstionMessage, k_MinDimensitonSize, k_MaxDimensitonSize, k_Rows);
+            Console.WriteLine(getDimenstionMessage, GameBoard.k_MinDimensitonSize, GameBoard.k_MaxDimensitonSize, k_Rows);
             o_Rows = getBoardDimenstionFromUser();
-            Console.WriteLine(getDimenstionMessage, k_MinDimensitonSize, k_MaxDimensitonSize, k_Columns);
+            Console.WriteLine(getDimenstionMessage, GameBoard.k_MinDimensitonSize, GameBoard.k_MaxDimensitonSize, k_Columns);
             o_Columns = getBoardDimenstionFromUser();
             setBoardHeaders(o_Columns);
             setSeperatorLine(o_Columns);
         }
-   
+
+        public void GetGameMode(ref GameUtils.eGameMode io_GameMode)
+        {
+            byte input;
+            string requestMessage = "Please Choose the game mod. enter {0} for Player vs Player or {1} for Player vs Computer";
+            string invlaidInputMessage = "invalid input please enter a nunmber between {0} and {1}";
+            bool invalidInput = true;
+            while (invalidInput)
+            {
+                if (byte.TryParse(Console.ReadLine(), out input))
+                {
+                    switch (input)
+                    {
+                        case 0:
+                            io_GameMode = GameUtils.eGameMode.PlayerVsPlayer;
+                            invalidInput = false;
+                            break;
+                        case 1:
+                            io_GameMode = GameUtils.eGameMode.PlayerVsAi;
+                            invalidInput = false;
+                            break;
+                        default:
+                            continue;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine(invlaidInputMessage, (int)GameUtils.eGameMode.PlayerVsPlayer, (int)GameUtils.eGameMode.PlayerVsAi);
+                }
+            }
+        }
+
         private int getBoardDimenstionFromUser()
         {
-            string invlaidInputMessage = "invalid input please enter a nunmber between 4 and 8 as your selection";
+            string invlaidInputMessage = "invalid input please enter a nunmber between {0} and {1} as your selection";
             int result = 0;
             bool invalidInput = true;
             while (invalidInput)
             {
-                if (int.TryParse(Console.ReadLine(), out result) && result >= k_MinDimensitonSize && result <= k_MaxDimensitonSize)
+                if (int.TryParse(Console.ReadLine(), out result))
                 {
-                    invalidInput = false;
-                }
-                else
-                {
-                    Console.WriteLine(invlaidInputMessage);
+                    if (result >= GameBoard.k_MinDimensitonSize && result <= GameBoard.k_MaxDimensitonSize)
+                    {
+                        invalidInput = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine(invlaidInputMessage, GameBoard.k_MinDimensitonSize, GameBoard.k_MaxDimensitonSize);
+                    }
                 }
             }
-
             return result;
         }
 
@@ -68,7 +100,7 @@ namespace B16_Ex02
             m_BoardHeader = boardHeader.ToString();
         }
 
-        public void RenderScrean(GameBoard i_GameBoard)
+        public void RenderScreen(GameBoard i_GameBoard)
         {
             int rows = i_GameBoard.Rows;
             int columns = i_GameBoard.Columns;

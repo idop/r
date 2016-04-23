@@ -6,6 +6,8 @@ namespace B16_Ex02
 {
     public class GameBoard
     {
+        public const int k_MinDimensitonSize = 4;
+        public const int k_MaxDimensitonSize = 8;
         private const char k_Space = ' ';
         private char[,] m_GameBoard;
 

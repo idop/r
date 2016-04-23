@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7537E075-6AC3-435B-840C-066604BD9C19}</ProjectGuid>
+    <ProjectGuid>{66CA8AB0-3E66-413F-A149-E7C94DF86C18}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UiManager</RootNamespace>
-    <AssemblyName>UiManager</AssemblyName>
+    <RootNamespace>Ex02_GameUtils</RootNamespace>
+    <AssemblyName>Ex02_GameUtils</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -35,23 +35,10 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="UiManager.cs" />
+    <Compile Include="GameUtils.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Ex02.ConsoleUtils">
-      <HintPath>..\..\..\..\Temp\Ex02.ConsoleUtils.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Ex02_GameUtils\Ex02_GameUtils.csproj">
-      <Project>{66ca8ab0-3e66-413f-a149-e7c94df86c18}</Project>
-      <Name>Ex02_GameUtils</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Ex2_GameBoard\Ex02_GameBoard.csproj">
-      <Project>{eecc6db4-3666-4b49-a52f-d237e39b5ee0}</Project>
-      <Name>Ex02_GameBoard</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

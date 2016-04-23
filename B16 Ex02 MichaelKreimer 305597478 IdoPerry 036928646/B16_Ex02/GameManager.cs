@@ -2,6 +2,7 @@
 {
     internal  class GameManager
     {
+        private GameBoard m_GameBoard;
         public static void Start()
         {
 

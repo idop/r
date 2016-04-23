@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{45B00531-A356-4813-A8D4-F43AE59F5D4A}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{7537E075-6AC3-435B-840C-066604BD9C19}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>B16_Ex02</RootNamespace>
-    <AssemblyName>B16_Ex02</AssemblyName>
+    <RootNamespace>UiManager</RootNamespace>
+    <AssemblyName>UiManager</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,22 +31,17 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Ai.cs" />
-    <Compile Include="ForInAlineGame.cs" />
-    <Compile Include="GameBoard.cs" />
-    <Compile Include="GameManager.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="UiManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Ex02.ConsoleUtils">
+      <HintPath>..\..\..\..\Temp\Ex02.ConsoleUtils.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\UiManager\Ex02_UiManager.csproj">
-      <Project>{7537e075-6ac3-435b-840c-066604bd9c19}</Project>
-      <Name>Ex02_UiManager</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace B16_Ex02
 {
-    class ForInAlineGame : Game
+    class ForInAlineGame 
     {
         public void StartLevel()
         {

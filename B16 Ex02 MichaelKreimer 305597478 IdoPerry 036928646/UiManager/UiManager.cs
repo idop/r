@@ -4,10 +4,7 @@ using System.Text;
 
 namespace B16_Ex02
 {
-    internal interface Game
+    class UiManager
     {
-        bool IsLevelDone();
-        void StartLevel();
-
     }
 }

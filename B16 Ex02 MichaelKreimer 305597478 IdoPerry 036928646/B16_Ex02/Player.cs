@@ -8,13 +8,11 @@ namespace B16_Ex02
     {
         private string m_name;
         private byte m_score;
-        private bool m_isHuman;
 
-        public Player(bool isHuman,int playerNumber)
+        public Player(int playerNumber)
         {
-            m_name = (isHuman ? "Human" : "Computer") + playerNumber;
+            m_name = "Player " + (playerNumber + 1);
             m_score = 0;
-            m_isHuman = isHuman;
         }
 
         public string Name
@@ -39,13 +37,5 @@ namespace B16_Ex02
                 m_score = (byte)value;
             }
         }
-        public bool IsHuman
-        {
-            get
-            {
-                return m_isHuman;
-            }
-        }
-
     }
 }

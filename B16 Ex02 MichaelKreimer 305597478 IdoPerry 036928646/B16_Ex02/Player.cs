@@ -19,17 +19,32 @@ namespace B16_Ex02
 
         public string Name
         {
-            get { return m_name; }
-            set { m_name = value; }
+            get
+            {
+                return m_name;
+            }
+            set
+            {
+                m_name = value;
+            }
         }
         public int Score
         {
-            get { return (int)m_score; }
-            set { m_score = (byte)value; }
+            get
+            {
+                return (int)m_score;
+            }
+            set
+            {
+                m_score = (byte)value;
+            }
         }
         public bool IsHuman
         {
-            get { return m_isHuman; }
+            get
+            {
+                return m_isHuman;
+            }
         }
 
     }

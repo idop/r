@@ -52,10 +52,10 @@ namespace B16_Ex02
 
         private void createGamePlayers(int i_numOfHumanPlayers, int i_numOfComputerizedPlayers)
         {
-            int i_Index = 1;
-            createGamePlayersByType(i_numOfHumanPlayers, GameUtils.v_Human,i_Index);
-            i_Index = i_numOfHumanPlayers + 1;
-            createGamePlayersByType(i_numOfComputerizedPlayers, GameUtils.v_Robot,i_Index);
+            int index = 1;
+            createGamePlayersByType(i_numOfHumanPlayers, GameUtils.v_Human, index);
+            index = i_numOfHumanPlayers + 1;
+            createGamePlayersByType(i_numOfComputerizedPlayers, GameUtils.v_Robot, index);
         }
         private void createGamePlayersByType(int i_numOfPlayers,bool i_isHuman, int i_Index)
         {
@@ -76,15 +76,15 @@ namespace B16_Ex02
         {
             while(playerWantsToPlay)
             {
-                playerWantsToPlay = playTurn();
+                playTurn();
                 m_UiManager.RenderScreen(m_GameBoard);
                 checkBoardStatus();
             }
 
-            startPlayerForfitAction();
+            startPlayerForfeitAction();
         }
 
-        private void startPlayerForfitAction()
+        private void startPlayerForfeitAction()
         {
             //TODO
         }
@@ -94,9 +94,37 @@ namespace B16_Ex02
             //TODO
         }
 
-        private bool playTurn()
+        private void playTurn()
         {
-            return true; //TODO
+            Player currentPlayer = m_Players[m_TurnNumber];
+            if (currentPlayer.IsHuman == true)
+            {
+                playHumanTurn();
+            }
+            else // computer player 
+            {
+                playComputerTurn();
+            }
+            switchTurn();
+        }
+
+        private void playHumanTurn()
+        {
+            userWantsToPlay = m_UiManager.AskIfUserWantsToPlay();
+            if (userWantsToPlay)
+            {
+                UiManager.g
+            }
+        }
+
+        private void playComputerTurn()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void switchTurn()
+        {
+            m_TurnNumber = (m_TurnNumber + 1) % k_NumberOfPlayers;
         }
 
         private void playAnotherLevel()

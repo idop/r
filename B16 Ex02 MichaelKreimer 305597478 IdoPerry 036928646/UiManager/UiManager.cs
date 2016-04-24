@@ -126,5 +126,34 @@ namespace B16_Ex02
                 currentBoardLine.Remove(0, currentBoardLine.Length);
             }
         }
+        public int GetIntegerFromUser(int i_Min,int i_Max)
+        {
+            string invalidInputMessage = "invalid input please enter a number between {0} and {1} as your selection";
+            int inputNumber = 0;
+            bool invalidInput = true;
+           
+            while (invalidInput)
+            {
+                if (int.TryParse(Console.ReadLine(), out inputNumber))
+                {
+                    if (inputNumber >= i_Min && inputNumber < i_Max)
+                    {
+                        invalidInput = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine(invalidInputMessage, i_Min, i_Max);
+                    }
+                }
+            }
+            return inputNumber;
+        }
+        public void PrintTurnMessage(string i_name)
+        {
+            string message = string.Format(
+@"Hi {0} it's your turn",
+i_name);
+            Console.WriteLine(message);
+        }
     }
 }

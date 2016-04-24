@@ -8,5 +8,15 @@ C:\t\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\B16_Ex02\bin\Debug\E
 C:\t\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\B16_Ex02\bin\Debug\UiManager.pdb
 C:\t\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\B16_Ex02\obj\Debug\B16_Ex02.exe
 C:\t\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\B16_Ex02\obj\Debug\B16_Ex02.pdb
+C:\Users\micha\Documents\GitHub\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\B16_Ex02\bin\Debug\B16_Ex02.exe
+C:\Users\micha\Documents\GitHub\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\B16_Ex02\bin\Debug\B16_Ex02.pdb
+C:\Users\micha\Documents\GitHub\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\B16_Ex02\bin\Debug\Ex02_GameUtils.dll
+C:\Users\micha\Documents\GitHub\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\B16_Ex02\bin\Debug\Ex2_GameBoard.dll
+C:\Users\micha\Documents\GitHub\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\B16_Ex02\bin\Debug\UiManager.dll
+C:\Users\micha\Documents\GitHub\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\B16_Ex02\bin\Debug\Ex02.ConsoleUtils.dll
+C:\Users\micha\Documents\GitHub\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\B16_Ex02\bin\Debug\Ex02_GameUtils.pdb
+C:\Users\micha\Documents\GitHub\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\B16_Ex02\bin\Debug\Ex2_GameBoard.pdb
+C:\Users\micha\Documents\GitHub\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\B16_Ex02\bin\Debug\UiManager.pdb
+C:\Users\micha\Documents\GitHub\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\B16_Ex02\obj\Debug\B16_Ex02.csprojResolveAssemblyReference.cache
 C:\Users\micha\Documents\GitHub\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\B16_Ex02\obj\Debug\B16_Ex02.exe
 C:\Users\micha\Documents\GitHub\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\B16_Ex02\obj\Debug\B16_Ex02.pdb

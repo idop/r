@@ -25,11 +25,16 @@ namespace B16_Ex02
 
         public void GetGameMode(ref GameUtils.eGameMode io_GameMode)
         {
-            byte input;
             string requestMessage = "Please Choose the game mod. enter {0} for Player vs Player or {1} for Player vs Computer";
             string invlaidInputMessage = "invalid input please enter a nunmber between {0} and {1}";
             bool invalidInput = true;
             Console.WriteLine(requestMessage, (byte)GameUtils.eGameMode.PlayerVsPlayer, (byte)GameUtils.eGameMode.PlayerVsAi);
+            GetGameModeInput(ref io_GameMode, invlaidInputMessage, ref invalidInput);
+        }
+
+        private static void GetGameModeInput(ref GameUtils.eGameMode io_GameMode, string invlaidInputMessage, ref bool invalidInput)
+        {
+            byte input;
             while (invalidInput)
             {
                 if (byte.TryParse(Console.ReadLine(), out input))

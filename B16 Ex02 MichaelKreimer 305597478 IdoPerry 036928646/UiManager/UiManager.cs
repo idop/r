@@ -26,10 +26,10 @@ namespace B16_Ex02
         public void GetGameMode(ref GameUtils.eGameMode io_GameMode)
         {
             string requestMessage = "Please Choose the game mod. enter {0} for Player vs Player or {1} for Player vs Computer";
-            string invlaidInputMessage = "invalid input please enter a nunmber between {0} and {1}";
+            string invalidInputMessage = "invalid input please enter a nunmber between {0} and {1}";
             bool invalidInput = true;
             Console.WriteLine(requestMessage, (byte)GameUtils.eGameMode.PlayerVsPlayer, (byte)GameUtils.eGameMode.PlayerVsAi);
-            GetGameModeInput(ref io_GameMode, invlaidInputMessage, ref invalidInput);
+            GetGameModeInput(ref io_GameMode, invalidInputMessage, ref invalidInput);
         }
 
         private static void GetGameModeInput(ref GameUtils.eGameMode io_GameMode, string invlaidInputMessage, ref bool invalidInput)
@@ -62,7 +62,7 @@ namespace B16_Ex02
 
         private int getBoardDimenstionFromUser()
         {
-            string invlaidInputMessage = "invalid input please enter a nunmber between {0} and {1} as your selection";
+            string invalidInputMessage = "invalid input please enter a nunmber between {0} and {1} as your selection";
             int result = 0;
             bool invalidInput = true;
             while (invalidInput)
@@ -75,7 +75,7 @@ namespace B16_Ex02
                     }
                     else
                     {
-                        Console.WriteLine(invlaidInputMessage, GameBoard.k_MinDimensitonSize, GameBoard.k_MaxDimensitonSize);
+                        Console.WriteLine(invalidInputMessage, GameBoard.k_MinDimensitonSize, GameBoard.k_MaxDimensitonSize);
                     }
                 }
             }

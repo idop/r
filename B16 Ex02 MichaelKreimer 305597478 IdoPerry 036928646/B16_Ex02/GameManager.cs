@@ -9,7 +9,7 @@ namespace B16_Ex02
         private GameBoard m_GameBoard;
         private UiManager m_UiManager = new UiManager();
         private GameUtils.eGameMode m_GameMode;
-      //  private int m_TurnNumber = 0;
+        private int m_TurnNumber = 0;
         private bool playerWantsToPlay = true;
         private List<Player> m_Players = new List<Player>();
 

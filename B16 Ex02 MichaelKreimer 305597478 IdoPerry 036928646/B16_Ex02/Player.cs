@@ -12,8 +12,7 @@ namespace B16_Ex02
 
         public Player(bool isHuman,int playerNumber)
         {
-            m_name = isHuman ? "Human" : "Computer";
-            m_name = m_name + playerNumber;
+            m_name = (isHuman ? "Human" : "Computer") + playerNumber;
             m_score = 0;
             m_isHuman = isHuman;
         }

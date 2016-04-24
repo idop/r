@@ -20,3 +20,5 @@ C:\Users\micha\Documents\GitHub\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036
 C:\Users\micha\Documents\GitHub\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\B16_Ex02\obj\Debug\B16_Ex02.csprojResolveAssemblyReference.cache
 C:\Users\micha\Documents\GitHub\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\B16_Ex02\obj\Debug\B16_Ex02.exe
 C:\Users\micha\Documents\GitHub\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\B16_Ex02\obj\Debug\B16_Ex02.pdb
+C:\t\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\B16_Ex02\bin\Debug\Ex02_GameUtils.dll
+C:\t\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\B16_Ex02\bin\Debug\Ex02_GameUtils.pdb

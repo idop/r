@@ -21,17 +21,20 @@ namespace B16_Ex02
             {
                 return m_name;
             }
+
             set
             {
                 m_name = value;
             }
         }
+
         public int Score
         {
             get
             {
                 return (int)m_score;
             }
+
             set
             {
                 m_score = (byte)value;

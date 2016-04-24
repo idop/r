@@ -8,8 +8,10 @@ namespace B16_Ex02
     {
         public const char k_Player1Symbol = 'x';
         public const char k_Player2Symbol = 'o';
-        public const bool v_Human = true;
-        public const bool v_Robot = false;
+        public const int v_HumanIndex = 0;
+        public const int v_RobotIndex = 1;
+        public const int v_FirstPlayerIndex = 0;
+        public const int v_SecondPlayerIndex = 1;
         public enum eGameMode : byte
         {
             PlayerVsPlayer,

@@ -151,7 +151,8 @@ namespace B16_Ex02
         public void PrintTurnMessage(string i_name)
         {
             string message = string.Format(
-@"Hi {0} it's your turn",
+@"Hi {0}, it's your turn
+",
 i_name);
             Console.WriteLine(message);
         }

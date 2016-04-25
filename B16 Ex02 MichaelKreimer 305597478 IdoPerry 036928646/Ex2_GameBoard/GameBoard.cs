@@ -19,6 +19,14 @@ namespace B16_Ex02
             Player2Square = (byte)k_Player2Symbol
         }
 
+        public enum eBoardStatus : byte
+        {
+            BoardHasEmptySquares,
+            BoardIsFull,
+            PlayerWon
+        }
+
+        private eBoardStatus m_BoardStatus;
         private eBoardSquare[,] m_GameBoard;
         private int m_NumberOfEmptySquares;
         private int[] m_CurrentEmptyRowInColumn;
@@ -42,6 +50,7 @@ namespace B16_Ex02
                     m_GameBoard[j, i] = eBoardSquare.EmptySquare;
                 }
             }
+            m_BoardStatus = eBoardStatus.BoardHasEmptySquares;
         }
 
         public eBoardSquare this[int row, int column]
@@ -76,13 +85,39 @@ namespace B16_Ex02
                 if (m_CurrentEmptyRowInColumn[i_ColumnIndex] != 0)
                 {
                     m_GameBoard[m_CurrentEmptyRowInColumn[i_ColumnIndex] - 1, i_ColumnIndex] = i_PlayerSquare;
-                    --m_CurrentEmptyRowInColumn[i_ColumnIndex];
                     --m_NumberOfEmptySquares;
+                    setNewBoardStatus(i_ColumnIndex);
+                    --m_CurrentEmptyRowInColumn[i_ColumnIndex];
                     isColumnFull = false;
+
                 }
             }
 
             return isColumnFull;
+        }
+
+        private void setNewBoardStatus(int i_LastUsedColumnIndex)
+        {
+            bool playerWon = checkIfPlayerWon(i_LastUsedColumnIndex);
+            if (playerWon)
+            {
+                m_BoardStatus = eBoardStatus.PlayerWon;
+            }
+            else if (m_NumberOfEmptySquares == 0)
+            {
+                m_BoardStatus = eBoardStatus.BoardIsFull;
+            }
+        }
+
+        private bool checkIfPlayerWon(int i_LastUsedColumnIndex)
+        {
+            bool playerWon = false;
+            return playerWon;
+        }
+
+        public eBoardStatus GetBoardStatus()
+        {
+            return m_BoardStatus;
         }
 
         private bool isValidColumn(int i_ColumnIndex)

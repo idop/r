@@ -8,39 +8,50 @@ namespace B16_Ex02
     {
         public const int k_MinDimensitonSize = 4;
         public const int k_MaxDimensitonSize = 8;
-        private const char k_EmptyPosition = ' ';
-        private char[,] m_GameBoard;
+        private const char k_EmptySquare = ' ';
+        private const char k_Player1Symbol = 'x';
+        private const char k_Player2Symbol = 'o';
+
+        public enum eBoardSquare : byte
+        {
+            EmptySquare = (byte)k_EmptySquare,
+            Player1Square = (byte)k_Player1Symbol,
+            Player2Square = (byte)k_Player2Symbol
+        }
+
+        private eBoardSquare[,] m_GameBoard;
+        private int m_NumberOfEmptySquares;
+        private int[] m_CurrentEmptyRowInColumn;
 
         public GameBoard(int i, int j)
         {
-            m_GameBoard = new char[i, j];
+            m_GameBoard = new eBoardSquare[i, j];
+            m_CurrentEmptyRowInColumn = new int[j];
             ClearBoard();
         }
 
         public void ClearBoard()
         {
-            for(int i = 0; i < m_GameBoard.GetLength(0); ++i)
+            m_NumberOfEmptySquares = Rows * Columns;
+
+            for (int i = 0; i < Columns; ++i)
             {
-                for(int j = 0; j < m_GameBoard.GetLength(1); ++j)
+                m_CurrentEmptyRowInColumn[i] = Rows;
+                for (int j = 0; j < Rows; ++j)
                 {
-                    m_GameBoard[i, j] = k_EmptyPosition;
+                    m_GameBoard[j, i] = eBoardSquare.EmptySquare;
                 }
-            } 
+            }
         }
 
-        public char this[int row, int column]
+        public eBoardSquare this[int row, int column]
         {
             get
             {
                 return m_GameBoard[row, column];
             }
-
-            set
-            {
-                m_GameBoard[row, column] = value;
-            }
         }
-         
+
         public int Rows
         {
             get
@@ -55,6 +66,28 @@ namespace B16_Ex02
             {
                 return m_GameBoard.GetLength(1);
             }
+        }
+
+        public bool TryToSetColumnSquare(int i_ColumnIndex, eBoardSquare i_PlayerSquare)
+        {
+            bool isColumnFull = true;
+            if (isValidColumn(i_ColumnIndex))
+            {
+                if (m_CurrentEmptyRowInColumn[i_ColumnIndex] != 0)
+                {
+                    m_GameBoard[m_CurrentEmptyRowInColumn[i_ColumnIndex] - 1, i_ColumnIndex] = i_PlayerSquare;
+                    --m_CurrentEmptyRowInColumn[i_ColumnIndex];
+                    --m_NumberOfEmptySquares;
+                    isColumnFull = false;
+                }
+            }
+
+            return isColumnFull;
+        }
+
+        private bool isValidColumn(int i_ColumnIndex)
+        {
+            return i_ColumnIndex >= 0 && i_ColumnIndex < Columns;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace B16_Ex02
         private UiManager m_UiManager = new UiManager();
         private GameUtils.eGameMode m_GameMode;
         private int m_TurnNumber = 0;
-        private bool playerWantsToPlay = true;
+        private bool m_PlayerWantsToPlay = true;
         private Player[] m_Players = new Player[2];
 
         public void Start()
@@ -26,24 +26,28 @@ namespace B16_Ex02
             initializeGameMode();
             initializePlayers();
         }
+
         private void initializeGameBoard()
         {
             int rows, columns;
             m_UiManager.GetBoardDimensions(out rows, out columns);
             m_GameBoard = new GameBoard(rows, columns);
         }
+
         private void initializeGameMode()
         {
             m_UiManager.GetGameMode(ref m_GameMode);
         }
+
         private void initializePlayers()
         {
             m_Players[GameUtils.v_FirstPlayerIndex] = new Player(GameUtils.v_FirstPlayerIndex);
             m_Players[GameUtils.v_SecondPlayerIndex] = new Player(GameUtils.v_SecondPlayerIndex);
         }
+
         private void playGame()
         {
-            while(playerWantsToPlay)
+            while(m_PlayerWantsToPlay)
             {
                 playTurn();
                 m_UiManager.RenderScreen(m_GameBoard);
@@ -65,23 +69,22 @@ namespace B16_Ex02
 
         private void playTurn()
         {
-            if (m_TurnNumber == GameUtils.v_HumanIndex)
+            if (m_TurnNumber % 2 == 0 || m_GameMode == GameUtils.eGameMode.PlayerVsPlayer)
             {
                 playHumanTurn();
             }
-            else // computer player 
+            else  
             {
                 playComputerTurn();
             }
-            switchTurn();
+
+            endTurn();
         }
 
         private void playHumanTurn()
         {
-            //userWantsToPlay = m_UiManager.AskIfUserWantsToPlay();
-            //if (userWantsToPlay)
-            //{
-            //}
+            GameBoard.eBoardSquare playerSquare = m_TurnNumber % 2 == 0 ? GameBoard.eBoardSquare.Player1Square : GameBoard.eBoardSquare.Player2Square;
+            m_PlayerWantsToPlay = m_UiManager.GetMoveFormUser(m_Players[m_TurnNumber % 2].Name, playerSquare, m_GameBoard);
         }
 
         private void playComputerTurn()
@@ -89,15 +92,16 @@ namespace B16_Ex02
             throw new NotImplementedException();
         }
 
-        private void switchTurn()
+        private void endTurn()
         {
-            m_TurnNumber = (m_TurnNumber + 1) % k_NumberOfPlayers;
+           ++m_TurnNumber;
         }
 
         private void playAnotherLevel()
         {
-            //TODO
+            m_TurnNumber = 0;
+            m_GameBoard.ClearBoard();
+            m_UiManager.RenderScreen(m_GameBoard);
         }
-
     }
 }

@@ -101,7 +101,7 @@ namespace B16_Ex02
             {
                 if (int.TryParse(Console.ReadLine(), out inputNumber))
                 {
-                    if (inputNumber >= i_MinValue && inputNumber < i_MaxValue)
+                    if (inputNumber >= i_MinValue && inputNumber <= i_MaxValue)
                     {
                         invalidInput = false;
                     }

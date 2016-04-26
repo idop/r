@@ -65,7 +65,7 @@ namespace B16_Ex02
             }
             else
             {
-                if (/*TODO: GameBoard.GetWinner() == v_FirstPlayer*/ 1 == 1)
+                if (i_BoardData.GetWinner() == 0)
                 {
                     score = 1;
                 }

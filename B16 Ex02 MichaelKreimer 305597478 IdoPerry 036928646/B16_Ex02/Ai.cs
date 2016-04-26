@@ -19,22 +19,20 @@ namespace B16_Ex02
         {
             for (int i = 0; i < root.Data.Columns; i++)
             {
-
-                if (newBoard.pieceCanBeInsertedToColumn(i))
-                {
-                    GameBoard newBoard = new GameBoard(root.Data.Rows, root.Data.Columns);
-                    newBoard.insertPieceToColumn(i);
-                    root.AddChild(newBoard);
-                }
+                GameBoard.eBoardSquare eBoard = i % 2 == 0 ? GameBoard.eBoardSquare.Player2Square : GameBoard.eBoardSquare.Player1Square;
+                GameBoard newBoard = new GameBoard(root.Data.Rows, root.Data.Columns);
+                newBoard = root.Data;
+                newBoard.TryToSetColumnSquare(i, eBoard);
+                root.AddChild(newBoard);
             }
         }
 
         private int minMax(TreeNode<GameBoard> root, int depth, bool maximizing)
         {
-            //TODO: change true and false to constants v_Maximizing / v_Minimizing
+            //TODO: optionalchange true and false to constants v_Maximizing / v_Minimizing
             int bestValue,currentValue;
-            if (/*root.Data.hasWinner ||*/ depth == 0)
-            {
+            if (!root.Data.GetBoardStatus().Equals(GameBoard.eBoardStatus.BoardHasEmptySquares) || depth == 0)
+            { // if game is in terminal state or no more tree levels
                 return calculateScoreForResult(root.Data);
             }
             if (maximizing == true)

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace B16_Ex02
 {
-    public class GameBoard
+    public class GameBoard : ICloneable
     {
         public const int k_MinDimensitonSize = 4;
         public const int k_MaxDimensitonSize = 8;
@@ -36,6 +36,14 @@ namespace B16_Ex02
             m_GameBoard = new eBoardSquare[i, j];
             m_CurrentEmptyRowInColumn = new int[j];
             ClearBoard();
+        }
+
+        public GameBoard(int[] i_CurrentEmptyRowInColumn, eBoardSquare[,] i_GameBoardSquare, int i_NumberOfEmptySquares, eBoardStatus i_BoardStatus)
+        {
+            m_CurrentEmptyRowInColumn = i_CurrentEmptyRowInColumn;
+            m_GameBoard = i_GameBoardSquare;
+            m_NumberOfEmptySquares = i_NumberOfEmptySquares;
+            m_BoardStatus = i_BoardStatus;
         }
 
         public void ClearBoard()
@@ -132,6 +140,15 @@ namespace B16_Ex02
         private bool isValidColumn(int i_ColumnIndex)
         {
             return i_ColumnIndex >= 0 && i_ColumnIndex < Columns;
+        }
+
+        public object Clone()
+        {
+            int[] currentEmptyRowInColumn = (int[])m_CurrentEmptyRowInColumn.Clone();
+            eBoardSquare[,] gameBoardToCopy = (eBoardSquare[,])m_GameBoard.Clone();
+            int numberOfEmptySquares = m_NumberOfEmptySquares;
+            eBoardStatus boardStatus = m_BoardStatus;
+            return new GameBoard(currentEmptyRowInColumn, gameBoardToCopy, numberOfEmptySquares, boardStatus);
         }
     }
 }

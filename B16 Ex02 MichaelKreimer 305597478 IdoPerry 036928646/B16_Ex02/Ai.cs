@@ -10,27 +10,48 @@ namespace B16_Ex02
         TreeNode<GameBoard> root;
         public int GetNextMove(GameBoard i_GameBoard)
         {
-            root = new TreeNode<GameBoard>(i_GameBoard);
-            buildDesicionsTree(root,5); // TODO: change 5 to constant depth which will be decided later
-            return minMax(root, 5, true);
+            int indexChosen = -1;
+            root = new TreeNode<GameBoard>(i_GameBoard,0);
+            buildDesicionsTree(root,6); // TODO: change 5 to constant depth which will be decided later
+            int bestValue = minMax(root, 6, true);
+
+            foreach (TreeNode<GameBoard> tNode in root.Children)
+            {
+                if (tNode.Score == bestValue)
+                {
+                    indexChosen = tNode.Index;
+                    break;
+                }
+            }
+            return indexChosen;
         }
 
         private void buildDesicionsTree(TreeNode<GameBoard> root, int depth)
         {
+            if (!root.Data.GetBoardStatus().Equals(GameBoard.eBoardStatus.BoardHasEmptySquares) || depth == 0)
+            {
+                return;
+            }
             for (int i = 0; i < root.Data.Columns; i++)
             {
-                GameBoard.eBoardSquare eBoard = i % 2 == 0 ? GameBoard.eBoardSquare.Player2Square : GameBoard.eBoardSquare.Player1Square;
-                GameBoard newBoard = new GameBoard(root.Data.Rows, root.Data.Columns);
-                newBoard = root.Data;
-                newBoard.TryToSetColumnSquare(i, eBoard);
-                root.AddChild(newBoard);
+                GameBoard.eBoardSquare eBoard = i % 2 == 0 ? GameBoard.eBoardSquare.Player2Square : GameBoard.eBoardSquare.Player1Square; //first time we enter the loop is with the computer
+                GameBoard newBoard = (GameBoard)root.Data.Clone();
+                bool isColumnFull = newBoard.TryToSetColumnSquare(i, eBoard);
+                if (isColumnFull == false)
+                {
+                    root.AddChild(newBoard,i);
+                }
+            }
+            foreach (TreeNode<GameBoard> childNode in root.Children)
+            {
+                buildDesicionsTree(childNode, depth - 1);
             }
         }
 
         private int minMax(TreeNode<GameBoard> root, int depth, bool maximizing)
         {
             //TODO: optionalchange true and false to constants v_Maximizing / v_Minimizing
-            int bestValue,currentValue;
+            int bestValue, currentValue, chosenIndex;
             if (!root.Data.GetBoardStatus().Equals(GameBoard.eBoardStatus.BoardHasEmptySquares) || depth == 0)
             { // if game is in terminal state or no more tree levels
                 return calculateScoreForResult(root.Data);
@@ -40,8 +61,12 @@ namespace B16_Ex02
                 bestValue = int.MinValue;
                 foreach (TreeNode<GameBoard> childNode in root.Children)
                 {
-                    currentValue = minMax(childNode, depth - 1, false);
-                    bestValue = Math.Max(currentValue, bestValue);
+                    childNode.Score = minMax(childNode, depth - 1, false);
+                    if (bestValue < childNode.Score)
+                    {
+                        chosenIndex = childNode.Index;
+                    }
+                        
                 }
             }
             else
@@ -65,6 +90,7 @@ namespace B16_Ex02
             }
             else
             {
+               // TODO: implement get winner
                 if (i_BoardData.GetWinner() == 0)
                 {
                     score = 1;

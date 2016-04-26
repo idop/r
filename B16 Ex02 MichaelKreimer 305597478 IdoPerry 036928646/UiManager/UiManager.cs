@@ -16,9 +16,9 @@ namespace B16_Ex02
             string getDimenstionMessage = "Please enter the number of {2} you want to pay with (between {0} and {1})";
             Console.WriteLine(weclomeMessage);
             Console.WriteLine(getDimenstionMessage, GameBoard.k_MinDimensitonSize, GameBoard.k_MaxDimensitonSize, k_Rows);
-            o_Rows = getBoardDimenstionFromUser();
+            o_Rows = GetIntegerFromUser(GameBoard.k_MinDimensitonSize, GameBoard.k_MaxDimensitonSize);
             Console.WriteLine(getDimenstionMessage, GameBoard.k_MinDimensitonSize, GameBoard.k_MaxDimensitonSize, k_Columns);
-            o_Columns = getBoardDimenstionFromUser();
+            o_Columns = GetIntegerFromUser(GameBoard.k_MinDimensitonSize, GameBoard.k_MaxDimensitonSize);
             setBoardHeaders(o_Columns);
             setSeperatorLine(o_Columns);
         }
@@ -26,61 +26,25 @@ namespace B16_Ex02
         public void GetGameMode(ref GameUtils.eGameMode io_GameMode)
         {
             string requestMessage = "Please Choose the game mod. enter {0} for Player vs Player or {1} for Player vs Computer";
-            string invalidInputMessage = "invalid input please enter a nunmber between {0} and {1}";
-            bool invalidInput = true;
             Console.WriteLine(requestMessage, (byte)GameUtils.eGameMode.PlayerVsPlayer, (byte)GameUtils.eGameMode.PlayerVsAi);
-            GetGameModeInput(ref io_GameMode, invalidInputMessage, ref invalidInput);
+            io_GameMode = GetGameModeInput();
         }
 
-        private static void GetGameModeInput(ref GameUtils.eGameMode io_GameMode, string invlaidInputMessage, ref bool invalidInput)
+        private GameUtils.eGameMode GetGameModeInput()
         {
-            byte input;
-            while (invalidInput)
-            {
-                if (byte.TryParse(Console.ReadLine(), out input))
-                {
-                    switch (input)
-                    {
-                        case 0:
-                            io_GameMode = GameUtils.eGameMode.PlayerVsPlayer;
-                            invalidInput = false;
-                            break;
-                        case 1:
-                            io_GameMode = GameUtils.eGameMode.PlayerVsAi;
-                            invalidInput = false;
-                            break;
-                        default:
-                            continue;
-                    }
-                }
-                else
-                {
-                    Console.WriteLine(invlaidInputMessage, (byte)GameUtils.eGameMode.PlayerVsPlayer, (byte)GameUtils.eGameMode.PlayerVsAi);
-                }
-            }
-        }
+            int input = GetIntegerFromUser((byte)GameUtils.eGameMode.PlayerVsPlayer, (byte)GameUtils.eGameMode.PlayerVsAi);
+            GameUtils.eGameMode gameMode;
 
-        private int getBoardDimenstionFromUser()
-        {
-            string invalidInputMessage = "invalid input please enter a nunmber between {0} and {1} as your selection";
-            int result = 0;
-            bool invalidInput = true;
-            while (invalidInput)
+            if (input == 0)
             {
-                if (int.TryParse(Console.ReadLine(), out result))
-                {
-                    if (result >= GameBoard.k_MinDimensitonSize && result <= GameBoard.k_MaxDimensitonSize)
-                    {
-                        invalidInput = false;
-                    }
-                    else
-                    {
-                        Console.WriteLine(invalidInputMessage, GameBoard.k_MinDimensitonSize, GameBoard.k_MaxDimensitonSize);
-                    }
-                }
+                gameMode = GameUtils.eGameMode.PlayerVsPlayer;
+            }
+            else
+            {
+                gameMode = GameUtils.eGameMode.PlayerVsAi;
             }
 
-            return result;
+            return gameMode;
         }
 
         private void setSeperatorLine(int i_Columns)
@@ -118,7 +82,7 @@ namespace B16_Ex02
                 currentBoardLine.Append("|");
                 for (int j = 0; j < columns; ++j)
                 {
-                    currentBoardLine.AppendFormat("{0}|", i_GameBoard[i, j]);
+                    currentBoardLine.AppendFormat("{0}|", (char)i_GameBoard[i, j]);
                 }
 
                 Console.WriteLine(currentBoardLine);
@@ -126,35 +90,63 @@ namespace B16_Ex02
                 currentBoardLine.Remove(0, currentBoardLine.Length);
             }
         }
-        public int GetIntegerFromUser(int i_Min,int i_Max)
+
+        public int GetIntegerFromUser(int i_MinValue, int i_MaxValue)
         {
             string invalidInputMessage = "invalid input please enter a number between {0} and {1} as your selection";
             int inputNumber = 0;
             bool invalidInput = true;
-           
+
             while (invalidInput)
             {
                 if (int.TryParse(Console.ReadLine(), out inputNumber))
                 {
-                    if (inputNumber >= i_Min && inputNumber < i_Max)
+                    if (inputNumber >= i_MinValue && inputNumber < i_MaxValue)
                     {
                         invalidInput = false;
                     }
                     else
                     {
-                        Console.WriteLine(invalidInputMessage, i_Min, i_Max);
+                        Console.WriteLine(invalidInputMessage, i_MinValue, i_MaxValue);
                     }
                 }
             }
+
             return inputNumber;
         }
-        public void PrintTurnMessage(string i_name)
+
+        public bool GetMoveFormUser(string i_PlayerName, GameBoard.eBoardSquare i_playerSquare, GameBoard i_GameBoard) //TODO Refactor this and fix logic
         {
-            string message = string.Format(
-@"Hi {0}, it's your turn
-",
-i_name);
-            Console.WriteLine(message);
+            string message = "Hi {0}, it's your turn. Please Choose a Valid Column or q to forfit";
+            string invlaidInputMessage = "Invalid Input Please Choose a Valid Column or q to forfit";
+            char inputChar;
+            int columnChoise;
+            bool playerWantsToPlay = true;
+            bool invalidInput = true;
+            Console.WriteLine(message, i_PlayerName);
+            while (invalidInput)
+            {
+                if (char.TryParse(Console.ReadLine(), out inputChar))
+                {
+                    if (inputChar == GameUtils.k_ExitChar)
+                    {
+                        playerWantsToPlay = false;
+                        invalidInput = false;
+                    }
+                    else if (char.IsDigit(inputChar))
+                    {
+                        columnChoise = (int)char.GetNumericValue(inputChar);
+                        invalidInput = i_GameBoard.TryToSetColumnSquare(columnChoise, i_playerSquare);
+                    }
+                }
+
+                if (invalidInput)
+                {
+                    Console.WriteLine(invlaidInputMessage);
+                }
+            }
+
+            return playerWantsToPlay;
         }
     }
 }

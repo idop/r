@@ -11,6 +11,7 @@ namespace B16_Ex02
         private GameUtils.eGameMode m_GameMode;
         private int m_TurnNumber = 0;
         private bool m_PlayerWantsToPlay = true;
+        private bool m_CurrentGameEnded = false;
         private Player[] m_Players = new Player[2];
 
         public void Start()
@@ -47,24 +48,61 @@ namespace B16_Ex02
 
         private void playGame()
         {
-            while(m_PlayerWantsToPlay)
+            while (m_PlayerWantsToPlay)
             {
-                playTurn();
-                m_UiManager.RenderScreen(m_GameBoard);
-                checkBoardStatus();
+                while (!m_CurrentGameEnded)
+                {
+                    playTurn();
+                    m_UiManager.RenderScreen(m_GameBoard);
+                    checkBoardStatus();
+                    ++m_TurnNumber;
+                }
+                checkIfPlayerWantsToPlayAnotherGame();
             }
 
-            startPlayerForfeitAction();
-        }
-
-        private void startPlayerForfeitAction()
-        {
-            //TODO
+          
         }
 
         private void checkBoardStatus()
         {
-            //TODO
+            if (m_PlayerWantsToPlay)
+            {
+                GameBoard.eBoardStatus boardStatus = m_GameBoard.BoardStatus;
+                if (boardStatus != GameBoard.eBoardStatus.NextPlayerCanPlay)
+                {
+                    if (boardStatus == GameBoard.eBoardStatus.PlayerWon)
+                    {
+                        m_Players[m_TurnNumber % 2].Score++;
+                        m_UiManager.DeclareWinner(m_Players[m_TurnNumber % 2].Name);
+                        m_UiManager.PresentCurrentScore(m_Players[0].Name, m_Players[0].Score, m_Players[1].Name, m_Players[1].Score);
+                        
+                    }
+                    else if(boardStatus == GameBoard.eBoardStatus.Draw)
+                    {
+                        m_UiManager.DeclareDraw();
+                        m_UiManager.PresentCurrentScore(m_Players[0].Name, m_Players[0].Score, m_Players[1].Name, m_Players[1].Score);
+                    }
+
+                    m_CurrentGameEnded = true;
+                }
+            }
+            else
+            {
+                m_Players[( m_TurnNumber + 1) % 2].Score++;
+                m_UiManager.DeclareForfit(m_Players[m_TurnNumber % 2].Name);
+                m_UiManager.PresentCurrentScore(m_Players[0].Name, m_Players[0].Score, m_Players[1].Name, m_Players[1].Score);
+                m_CurrentGameEnded = true;
+            }
+        }
+
+        private void checkIfPlayerWantsToPlayAnotherGame()
+        {
+
+            m_PlayerWantsToPlay = m_UiManager.CheckIfPplayerWantsToPlayAnotherGame();
+            if (m_PlayerWantsToPlay)
+            {
+                playAnotherLevel();
+            }
         }
 
         private void playTurn()
@@ -78,7 +116,6 @@ namespace B16_Ex02
                 playComputerTurn();
             }
 
-            endTurn();
         }
 
         private void playHumanTurn()
@@ -92,14 +129,10 @@ namespace B16_Ex02
             throw new NotImplementedException();
         }
 
-        private void endTurn()
-        {
-           ++m_TurnNumber;
-        }
-
         private void playAnotherLevel()
         {
             m_TurnNumber = 0;
+            m_CurrentGameEnded = false;
             m_GameBoard.ClearBoard();
             m_UiManager.RenderScreen(m_GameBoard);
         }

@@ -8,6 +8,7 @@ namespace B16_Ex02
     {
         public const int k_MinDimensitonSize = 4;
         public const int k_MaxDimensitonSize = 8;
+        private const int k_NumberOfSquaresInARowNeededForVictory = 4;
         private const char k_EmptySquare = ' ';
         private const char k_Player1Symbol = 'x';
         private const char k_Player2Symbol = 'o';
@@ -21,8 +22,8 @@ namespace B16_Ex02
 
         public enum eBoardStatus : byte
         {
-            BoardHasEmptySquares,
-            BoardIsFull,
+            NextPlayerCanPlay,
+            Draw,
             PlayerWon
         }
 
@@ -44,13 +45,13 @@ namespace B16_Ex02
 
             for (int i = 0; i < Columns; ++i)
             {
-                m_CurrentEmptyRowInColumn[i] = Rows;
+                m_CurrentEmptyRowInColumn[i] = Rows -1;
                 for (int j = 0; j < Rows; ++j)
                 {
                     m_GameBoard[j, i] = eBoardSquare.EmptySquare;
                 }
             }
-            m_BoardStatus = eBoardStatus.BoardHasEmptySquares;
+            m_BoardStatus = eBoardStatus.NextPlayerCanPlay;
         }
 
         public eBoardSquare this[int row, int column]
@@ -82,42 +83,112 @@ namespace B16_Ex02
             bool isColumnFull = true;
             if (isValidColumn(i_ColumnIndex))
             {
-                if (m_CurrentEmptyRowInColumn[i_ColumnIndex] != 0)
+                if (m_CurrentEmptyRowInColumn[i_ColumnIndex] >= 0)
                 {
-                    m_GameBoard[m_CurrentEmptyRowInColumn[i_ColumnIndex] - 1, i_ColumnIndex] = i_PlayerSquare;
+                    m_GameBoard[m_CurrentEmptyRowInColumn[i_ColumnIndex] , i_ColumnIndex] = i_PlayerSquare;
                     --m_NumberOfEmptySquares;
                     setNewBoardStatus(i_ColumnIndex);
                     --m_CurrentEmptyRowInColumn[i_ColumnIndex];
                     isColumnFull = false;
-
                 }
             }
 
             return isColumnFull;
         }
 
-        private void setNewBoardStatus(int i_LastUsedColumnIndex)
+        private void setNewBoardStatus(int i_LastInsertedColumn)
         {
-            bool playerWon = checkIfPlayerWon(i_LastUsedColumnIndex);
+            bool playerWon = checkIfPlayerWon(i_LastInsertedColumn);
             if (playerWon)
             {
                 m_BoardStatus = eBoardStatus.PlayerWon;
             }
             else if (m_NumberOfEmptySquares == 0)
             {
-                m_BoardStatus = eBoardStatus.BoardIsFull;
+                m_BoardStatus = eBoardStatus.Draw;
             }
         }
 
-        private bool checkIfPlayerWon(int i_LastUsedColumnIndex)
+        private bool checkIfPlayerWon(int i_LastInsertedColumn)
+        {
+            int lastInstertedRow = m_CurrentEmptyRowInColumn[i_LastInsertedColumn];
+            eBoardSquare currentPlayerSquare = m_GameBoard[lastInstertedRow, i_LastInsertedColumn];
+            bool playerWon = checkCurrentColumn(lastInstertedRow, i_LastInsertedColumn, currentPlayerSquare);
+            if (!playerWon)
+            {
+                playerWon = checkCurrentRow(lastInstertedRow, i_LastInsertedColumn, currentPlayerSquare);
+                if(!playerWon)
+                {
+                    playerWon = checkCurrentDiagonals(lastInstertedRow, i_LastInsertedColumn, currentPlayerSquare);
+                }
+            }
+           
+            return playerWon;
+        }
+
+        private bool checkCurrentColumn(int i_LastInstertedRow, int i_LastInsertedColumn, eBoardSquare currentPlayerSquare)
+        {
+            bool playerWon = false;
+            int maxNumberofSquaresInARow = 1;
+            for (int i = i_LastInstertedRow + 1 ; i < Rows && !playerWon;  ++i )
+            {
+                if (m_GameBoard[i,i_LastInsertedColumn] == currentPlayerSquare)
+                {
+                    ++maxNumberofSquaresInARow;
+                }
+                else
+                {
+                    break;
+                }
+
+                if (maxNumberofSquaresInARow == k_NumberOfSquaresInARowNeededForVictory)
+                {
+                    playerWon = true;
+                }
+            }
+
+            return playerWon;
+        }
+
+        private bool checkCurrentRow(int i_LastInstertedRow, int i_LastInsertedColumn, eBoardSquare currentPlayerSquare)
+        {
+            bool playerWon = false;
+            int maxNumberofSquaresInARow = 0;
+            for (int i = 0; i < Columns && !playerWon; ++i)
+            {
+                if (m_GameBoard[i_LastInstertedRow, i] == currentPlayerSquare)
+                {
+                    ++maxNumberofSquaresInARow;
+                }
+                else
+                {
+                    maxNumberofSquaresInARow = 0;
+                }
+
+                if (maxNumberofSquaresInARow == k_NumberOfSquaresInARowNeededForVictory)
+                {
+                    playerWon = true;
+                }
+            }
+
+            return playerWon;
+        }
+
+
+        private bool checkCurrentDiagonals(int i_LastInstertedRow, int i_LastInsertedColumn, eBoardSquare currentPlayerSquare)
         {
             bool playerWon = false;
             return playerWon;
         }
 
-        public eBoardStatus GetBoardStatus()
+
+
+        public eBoardStatus BoardStatus
         {
-            return m_BoardStatus;
+            get
+            {
+                return m_BoardStatus;
+            }
         }
 
         private bool isValidColumn(int i_ColumnIndex)

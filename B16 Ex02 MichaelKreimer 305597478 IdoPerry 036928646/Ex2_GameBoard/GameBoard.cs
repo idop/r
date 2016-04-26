@@ -114,6 +114,15 @@ namespace B16_Ex02
             bool playerWon = false;
             return playerWon;
         }
+        public int GetWinner()
+        {
+            //TODO: change all (and perhaps remove function later)
+            if (!this.GetBoardStatus().Equals(eBoardStatus.PlayerWon))
+            { 
+                return -1;
+            }
+            return 0;
+        }
 
         public eBoardStatus GetBoardStatus()
         {

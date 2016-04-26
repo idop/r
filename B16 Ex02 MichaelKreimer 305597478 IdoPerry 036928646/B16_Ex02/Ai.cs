@@ -56,9 +56,25 @@ namespace B16_Ex02
             return bestValue;
         }
 
-        private int calculateScoreForResult(GameBoard data)
+        private int calculateScoreForResult(GameBoard i_BoardData)
         {
-            throw new NotImplementedException();
+            int score;
+            if (i_BoardData.GetBoardStatus().Equals(GameBoard.eBoardStatus.BoardIsFull))
+            {
+                score = 0;
+            }
+            else
+            {
+                if (/*TODO: GameBoard.GetWinner() == v_FirstPlayer*/ 1 == 1)
+                {
+                    score = 1;
+                }
+                else
+                {
+                    score = -1;
+                }
+            }
+            return score;
         }
     }
 }

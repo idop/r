@@ -35,6 +35,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ObjectCopier.cs" />
     <Compile Include="GameUtils.cs" />
     <Compile Include="TreeNode.cs" />
   </ItemGroup>

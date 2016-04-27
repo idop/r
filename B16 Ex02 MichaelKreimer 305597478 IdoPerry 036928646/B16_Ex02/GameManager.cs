@@ -89,7 +89,9 @@ namespace B16_Ex02
 
         private void playComputerTurn()
         {
-            throw new NotImplementedException();
+            Ai ai = new Ai();
+            int nextMove = ai.GetNextMove(m_GameBoard);
+            m_GameBoard.TryToSetColumnSquare(nextMove, GameBoard.eBoardSquare.Player2Square);
         }
 
         private void endTurn()

@@ -6,6 +6,8 @@ C:\t\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\UiManager\bin\Debug\
 C:\t\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\UiManager\bin\Debug\Ex2_GameBoard.pdb
 C:\t\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\UiManager\obj\Debug\UiManager.dll
 C:\t\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\UiManager\obj\Debug\UiManager.pdb
+C:\t\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\UiManager\bin\Debug\Ex02_GameUtils.dll
+C:\t\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\UiManager\bin\Debug\Ex02_GameUtils.pdb
 C:\Users\micha\Documents\GitHub\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\UiManager\bin\Debug\UiManager.dll
 C:\Users\micha\Documents\GitHub\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\UiManager\bin\Debug\UiManager.pdb
 C:\Users\micha\Documents\GitHub\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\UiManager\bin\Debug\Ex02_GameUtils.dll
@@ -15,5 +17,3 @@ C:\Users\micha\Documents\GitHub\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036
 C:\Users\micha\Documents\GitHub\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\UiManager\obj\Debug\Ex02_UiManager.csprojResolveAssemblyReference.cache
 C:\Users\micha\Documents\GitHub\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\UiManager\obj\Debug\UiManager.dll
 C:\Users\micha\Documents\GitHub\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\UiManager\obj\Debug\UiManager.pdb
-C:\t\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\UiManager\bin\Debug\Ex02_GameUtils.dll
-C:\t\r\B16 Ex02 MichaelKreimer 305597478 IdoPerry 036928646\UiManager\bin\Debug\Ex02_GameUtils.pdb

@@ -202,8 +202,92 @@ namespace B16_Ex02
 
         private bool checkCurrentDiagonals(int i_LastInstertedRow, int i_LastInsertedColumn, eBoardSquare currentPlayerSquare)
         {
-            bool playerWon = false;
+            bool playerWon = checkLeftDiagonal(i_LastInstertedRow, i_LastInsertedColumn, currentPlayerSquare);
+            if(!playerWon)
+            {
+                playerWon = checkRightDiagonal(i_LastInstertedRow, i_LastInsertedColumn, currentPlayerSquare);
+            }
             return playerWon;
+        }
+
+        private bool checkRightDiagonal(int i_LastInstertedRow, int i_LastInsertedColumn, eBoardSquare currentPlayerSquare)
+        {
+            bool playerWon = false;
+            int maxNumberofSquaresInARow = 0;
+            int diagonalRowIndex = getCurrentDiagoanlUpperRightRow(i_LastInstertedRow, i_LastInsertedColumn);
+            int diagonalColumnIndex = getCurrentDiagoanlUpperRightolumn(i_LastInstertedRow, i_LastInsertedColumn);
+
+            while (diagonalRowIndex > 0 && diagonalColumnIndex < Columns && !playerWon)
+            {
+
+                if (m_GameBoard[diagonalRowIndex, diagonalColumnIndex] == currentPlayerSquare)
+                {
+                    ++maxNumberofSquaresInARow;
+                }
+                else
+                {
+                    maxNumberofSquaresInARow = 0;
+                }
+
+                if (maxNumberofSquaresInARow == k_NumberOfSquaresInARowNeededForVictory)
+                {
+                    playerWon = true;
+                }
+                ++diagonalColumnIndex;
+                --diagonalRowIndex;
+            }
+
+            return playerWon;
+        }
+
+        private int getCurrentDiagoanlUpperRightolumn(int i_LastInstertedRow, int i_LastInsertedColumn)
+        {
+            return Math.Max(i_LastInsertedColumn - (Rows - i_LastInstertedRow - 1), 0);
+        }
+
+        private int getCurrentDiagoanlUpperRightRow(int i_LastInstertedRow, int i_LastInsertedColumn)
+        {
+            return Math.Min(i_LastInstertedRow + i_LastInsertedColumn, (Columns - 1)); 
+        }
+
+        private bool checkLeftDiagonal(int i_LastInstertedRow, int i_LastInsertedColumn, eBoardSquare currentPlayerSquare)
+        {
+            bool playerWon = false;
+            int maxNumberofSquaresInARow = 0;
+            int diagonalRowIndex = getCurrentDiagoanlUpperLeftRow(i_LastInstertedRow, i_LastInsertedColumn);
+            int diagonalColumnIndex =  getCurrentDiagoanlUpperLeftColumn(i_LastInstertedRow, i_LastInsertedColumn); 
+
+            while (diagonalRowIndex < Rows && diagonalColumnIndex < Columns && !playerWon)
+            {
+
+                if (m_GameBoard[diagonalRowIndex, diagonalColumnIndex] == currentPlayerSquare)
+                {
+                    ++maxNumberofSquaresInARow;
+                }
+                else
+                {
+                    maxNumberofSquaresInARow = 0;
+                }
+
+                if (maxNumberofSquaresInARow == k_NumberOfSquaresInARowNeededForVictory)
+                {
+                    playerWon = true;
+                }
+                ++diagonalColumnIndex;
+                ++diagonalRowIndex;
+            }
+
+            return playerWon;
+    }
+
+        private int getCurrentDiagoanlUpperLeftColumn(int i_LastInstertedRow, int i_LastInsertedColumn)
+        {
+            return getCurrentDiagoanlUpperLeftRow(i_LastInsertedColumn , i_LastInstertedRow);
+        }
+
+        private int getCurrentDiagoanlUpperLeftRow(int i_LastInstertedRow, int i_LastInsertedColumn)
+        {
+            return Math.Max(i_LastInstertedRow - i_LastInsertedColumn, 0);
         }
 
         public eBoardStatus BoardStatus

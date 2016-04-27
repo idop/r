@@ -12,8 +12,8 @@ namespace B16_Ex02
         {
             int indexChosen = -1;
             root = new TreeNode<GameBoard>(i_GameBoard,0);
-            buildDesicionsTree(root,6); // TODO: change 5 to constant depth which will be decided later
-            int bestValue = minMax(root, 6, true);
+            buildDesicionsTree(root,3,true); // TODO: change 5 to constant depth which will be decided later
+            int bestValue = minMax(root, 3, true);
 
             foreach (TreeNode<GameBoard> tNode in root.Children)
             {
@@ -26,35 +26,39 @@ namespace B16_Ex02
             return indexChosen;
         }
 
-        private void buildDesicionsTree(TreeNode<GameBoard> root, int depth)
+        private void buildDesicionsTree(TreeNode<GameBoard> root, int depth,bool io_IsComputerPlaying)
         {
-            if (!root.Data.GetBoardStatus().Equals(GameBoard.eBoardStatus.BoardHasEmptySquares) || depth == 0)
+            GameBoard.eBoardSquare eBoard = io_IsComputerPlaying ? GameBoard.eBoardSquare.Player2Square : GameBoard.eBoardSquare.Player1Square;
+            if (!root.Data.BoardStatus.Equals(GameBoard.eBoardStatus.NextPlayerCanPlay) || depth == 0)
             {
                 return;
             }
             for (int i = 0; i < root.Data.Columns; i++)
             {
-                GameBoard.eBoardSquare eBoard = i % 2 == 0 ? GameBoard.eBoardSquare.Player2Square : GameBoard.eBoardSquare.Player1Square; //first time we enter the loop is with the computer
                 GameBoard newBoard = (GameBoard)root.Data.Clone();
                 bool isColumnFull = newBoard.TryToSetColumnSquare(i, eBoard);
                 if (isColumnFull == false)
                 {
-                    root.AddChild(newBoard,i);
+                    root.AddChild(newBoard, i);
+                }
+                else
+                {
+                    Console.Beep();
                 }
             }
             foreach (TreeNode<GameBoard> childNode in root.Children)
             {
-                buildDesicionsTree(childNode, depth - 1);
+                buildDesicionsTree(childNode, depth - 1,!io_IsComputerPlaying);
             }
         }
 
         private int minMax(TreeNode<GameBoard> root, int depth, bool maximizing)
         {
             //TODO: optionalchange true and false to constants v_Maximizing / v_Minimizing
-            int bestValue, currentValue, chosenIndex;
-            if (!root.Data.GetBoardStatus().Equals(GameBoard.eBoardStatus.BoardHasEmptySquares) || depth == 0)
+            int bestValue;
+            if (!root.Data.BoardStatus.Equals(GameBoard.eBoardStatus.NextPlayerCanPlay) || depth == 0)
             { // if game is in terminal state or no more tree levels
-                return calculateScoreForResult(root.Data);
+                return calculateScoreForResult(root.Data,maximizing);
             }
             if (maximizing == true)
             {
@@ -64,42 +68,39 @@ namespace B16_Ex02
                     childNode.Score = minMax(childNode, depth - 1, false);
                     if (bestValue < childNode.Score)
                     {
-                        chosenIndex = childNode.Index;
+                        bestValue = childNode.Score;
                     }
-                        
                 }
             }
             else
             {
                 bestValue = int.MaxValue;
-                foreach(TreeNode<GameBoard>childNode in root.Children)
+                foreach (TreeNode<GameBoard> childNode in root.Children)
                 {
-                    currentValue = minMax(childNode, depth - 1, true);
-                    bestValue = Math.Min(currentValue, bestValue);
+                    childNode.Score = minMax(childNode, depth - 1, true);
+                    if (bestValue > childNode.Score)
+                    {
+                        bestValue = childNode.Score;
+                    }
                 }
             }
             return bestValue;
         }
 
-        private int calculateScoreForResult(GameBoard i_BoardData)
+        private int calculateScoreForResult(GameBoard i_BoardData, bool i_IsComputerTurn)
         {
-            int score;
-            if (i_BoardData.GetBoardStatus().Equals(GameBoard.eBoardStatus.BoardIsFull))
-            {
-                score = 0;
-            }
-            else
-            {
-               // TODO: implement get winner
-                if (i_BoardData.GetWinner() == 0)
+            int score = 0;
+                if (i_BoardData.BoardStatus.Equals(GameBoard.eBoardStatus.PlayerWon))
                 {
-                    score = 1;
+                    if (i_IsComputerTurn == true)
+                    {
+                        score = 1;
+                    }
+                    else
+                    {
+                        score = -1;
+                    }
                 }
-                else
-                {
-                    score = -1;
-                }
-            }
             return score;
         }
     }

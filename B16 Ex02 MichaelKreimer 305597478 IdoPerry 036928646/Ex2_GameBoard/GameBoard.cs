@@ -91,9 +91,9 @@ namespace B16_Ex02
             bool isColumnFull = true;
             if (isValidColumn(i_ColumnIndex))
             {
-                if (m_CurrentEmptyRowInColumn[i_ColumnIndex] >= 0)
+                if (m_CurrentEmptyRowInColumn[i_ColumnIndex] > 0)
                 {
-                    m_GameBoard[m_CurrentEmptyRowInColumn[i_ColumnIndex], i_ColumnIndex] = i_PlayerSquare;
+                    m_GameBoard[m_CurrentEmptyRowInColumn[i_ColumnIndex] - 1, i_ColumnIndex] = i_PlayerSquare;
                     --m_NumberOfEmptySquares;
                     setNewBoardStatus(i_ColumnIndex);
                     --m_CurrentEmptyRowInColumn[i_ColumnIndex];
@@ -103,7 +103,24 @@ namespace B16_Ex02
 
             return isColumnFull;
         }
+        public bool TryToSetColumnSquare2(int i_ColumnIndex, eBoardSquare i_PlayerSquare)
+        {
+            //For testing
+            bool isColumnFull = true;
+            if (isValidColumn(i_ColumnIndex))
+            {
+                if (m_CurrentEmptyRowInColumn[i_ColumnIndex] > 0)
+                {
+                    m_GameBoard[m_CurrentEmptyRowInColumn[i_ColumnIndex] - 1, i_ColumnIndex] = i_PlayerSquare;
+                    --m_NumberOfEmptySquares;
+                    setNewBoardStatus(i_ColumnIndex);
+                    --m_CurrentEmptyRowInColumn[i_ColumnIndex];
+                    isColumnFull = false;
+                }
+            }
 
+            return isColumnFull;
+        }
         private void setNewBoardStatus(int i_LastInsertedColumn)
         {
             bool playerWon = checkIfPlayerWon(i_LastInsertedColumn);
@@ -119,7 +136,7 @@ namespace B16_Ex02
 
         private bool checkIfPlayerWon(int i_LastInsertedColumn)
         {
-            int lastInstertedRow = m_CurrentEmptyRowInColumn[i_LastInsertedColumn];
+            int lastInstertedRow = m_CurrentEmptyRowInColumn[i_LastInsertedColumn]-1;
             eBoardSquare currentPlayerSquare = m_GameBoard[lastInstertedRow, i_LastInsertedColumn];
             bool playerWon = checkCurrentColumn(lastInstertedRow, i_LastInsertedColumn, currentPlayerSquare);
             if (!playerWon)

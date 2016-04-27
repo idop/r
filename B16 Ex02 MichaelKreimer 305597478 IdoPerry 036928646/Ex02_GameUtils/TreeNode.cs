@@ -11,16 +11,20 @@ namespace Ex02_GameUtils
         public T Data { get; set; }
         public TreeNode<T> Parent { get; set; }
         public ICollection<TreeNode<T>> Children { get; set; }
+        public int Index { get; set; }
+        public int Score { get; set; }
 
-        public TreeNode(T data)
+        public TreeNode(T data,int index)
         {
             this.Data = data;
             this.Children = new LinkedList<TreeNode<T>>();
+            Index = index;
+            Score=0;
         }
 
-        public TreeNode<T> AddChild(T child)
+        public TreeNode<T> AddChild(T child,int i)
         {
-            TreeNode<T> childNode = new TreeNode<T>(child) { Parent = this };
+            TreeNode<T> childNode = new TreeNode<T>(child,i) { Parent = this };
             this.Children.Add(childNode);
             return childNode;
         }

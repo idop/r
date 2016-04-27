@@ -60,7 +60,7 @@ namespace B16_Ex02
                 checkIfPlayerWantsToPlayAnotherGame();
             }
 
-          
+
         }
 
         private void checkBoardStatus()
@@ -75,9 +75,9 @@ namespace B16_Ex02
                         m_Players[m_TurnNumber % 2].Score++;
                         m_UiManager.DeclareWinner(m_Players[m_TurnNumber % 2].Name);
                         m_UiManager.PresentCurrentScore(m_Players[0].Name, m_Players[0].Score, m_Players[1].Name, m_Players[1].Score);
-                        
+
                     }
-                    else if(boardStatus == GameBoard.eBoardStatus.Draw)
+                    else if (boardStatus == GameBoard.eBoardStatus.Draw)
                     {
                         m_UiManager.DeclareDraw();
                         m_UiManager.PresentCurrentScore(m_Players[0].Name, m_Players[0].Score, m_Players[1].Name, m_Players[1].Score);
@@ -88,7 +88,7 @@ namespace B16_Ex02
             }
             else
             {
-                m_Players[( m_TurnNumber + 1) % 2].Score++;
+                m_Players[(m_TurnNumber + 1) % 2].Score++;
                 m_UiManager.DeclareForfit(m_Players[m_TurnNumber % 2].Name);
                 m_UiManager.PresentCurrentScore(m_Players[0].Name, m_Players[0].Score, m_Players[1].Name, m_Players[1].Score);
                 m_CurrentGameEnded = true;
@@ -111,7 +111,7 @@ namespace B16_Ex02
             {
                 playHumanTurn();
             }
-            else  
+            else
             {
                 playComputerTurn();
             }
@@ -126,7 +126,9 @@ namespace B16_Ex02
 
         private void playComputerTurn()
         {
-            throw new NotImplementedException();
+            Ai ai = new Ai();
+            int nextMove = ai.GetNextMove(m_GameBoard);
+            m_GameBoard.TryToSetColumnSquare(nextMove, GameBoard.eBoardSquare.Player2Square);
         }
 
         private void playAnotherLevel()

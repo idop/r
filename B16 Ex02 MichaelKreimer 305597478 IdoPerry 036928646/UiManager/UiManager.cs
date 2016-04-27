@@ -47,7 +47,7 @@ namespace B16_Ex02
             return gameMode;
         }
 
-        public void PresentCurrentScore(string i_Player1Name, int i_Player1Score , string i_Player2Name, int i_Player2Score)
+        public void PresentCurrentScore(string i_Player1Name, int i_Player1Score, string i_Player2Name, int i_Player2Score)
         {
             string message = string.Format("{0} Score is {1}, {2} Score is {3}", i_Player1Name, i_Player1Score, i_Player2Name, i_Player2Score);
             Console.WriteLine(message);
@@ -89,9 +89,9 @@ namespace B16_Ex02
         public bool CheckIfPplayerWantsToPlayAnotherGame()
         {
             string message = "Press 1 to play another game and 0 to exit";
-            int input; 
+            int input;
             Console.WriteLine(message);
-            input = getIntegerFromUser(GameUtils.k_playerWantsToQuit,GameUtils.k_playerWantsToPlayAnotherLevel); ;
+            input = getIntegerFromUser(GameUtils.k_playerWantsToQuit, GameUtils.k_playerWantsToPlayAnotherLevel); ;
             return input == GameUtils.k_playerWantsToPlayAnotherLevel;
         }
 

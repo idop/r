@@ -4,7 +4,7 @@ using System.Text;
 
 namespace B16_Ex02
 {
-    public class GameBoard
+    public class GameBoard : ICloneable
     {
         public const int k_MinDimensitonSize = 4;
         public const int k_MaxDimensitonSize = 8;
@@ -39,13 +39,21 @@ namespace B16_Ex02
             ClearBoard();
         }
 
+        public GameBoard(int[] i_CurrentEmptyRowInColumn, eBoardSquare[,] i_GameBoardSquare, int i_NumberOfEmptySquares, eBoardStatus i_BoardStatus)
+        {
+            m_CurrentEmptyRowInColumn = i_CurrentEmptyRowInColumn;
+            m_GameBoard = i_GameBoardSquare;
+            m_NumberOfEmptySquares = i_NumberOfEmptySquares;
+            m_BoardStatus = i_BoardStatus;
+        }
+
         public void ClearBoard()
         {
             m_NumberOfEmptySquares = Rows * Columns;
 
             for (int i = 0; i < Columns; ++i)
             {
-                m_CurrentEmptyRowInColumn[i] = Rows -1;
+                m_CurrentEmptyRowInColumn[i] = Rows;
                 for (int j = 0; j < Rows; ++j)
                 {
                     m_GameBoard[j, i] = eBoardSquare.EmptySquare;
@@ -83,9 +91,9 @@ namespace B16_Ex02
             bool isColumnFull = true;
             if (isValidColumn(i_ColumnIndex))
             {
-                if (m_CurrentEmptyRowInColumn[i_ColumnIndex] >= 0)
+                if (m_CurrentEmptyRowInColumn[i_ColumnIndex] > 0)
                 {
-                    m_GameBoard[m_CurrentEmptyRowInColumn[i_ColumnIndex] , i_ColumnIndex] = i_PlayerSquare;
+                    m_GameBoard[m_CurrentEmptyRowInColumn[i_ColumnIndex] - 1, i_ColumnIndex] = i_PlayerSquare;
                     --m_NumberOfEmptySquares;
                     setNewBoardStatus(i_ColumnIndex);
                     --m_CurrentEmptyRowInColumn[i_ColumnIndex];
@@ -95,7 +103,24 @@ namespace B16_Ex02
 
             return isColumnFull;
         }
+        public bool TryToSetColumnSquare2(int i_ColumnIndex, eBoardSquare i_PlayerSquare)
+        {
+            //For testing
+            bool isColumnFull = true;
+            if (isValidColumn(i_ColumnIndex))
+            {
+                if (m_CurrentEmptyRowInColumn[i_ColumnIndex] > 0)
+                {
+                    m_GameBoard[m_CurrentEmptyRowInColumn[i_ColumnIndex] - 1, i_ColumnIndex] = i_PlayerSquare;
+                    --m_NumberOfEmptySquares;
+                    setNewBoardStatus(i_ColumnIndex);
+                    --m_CurrentEmptyRowInColumn[i_ColumnIndex];
+                    isColumnFull = false;
+                }
+            }
 
+            return isColumnFull;
+        }
         private void setNewBoardStatus(int i_LastInsertedColumn)
         {
             bool playerWon = checkIfPlayerWon(i_LastInsertedColumn);
@@ -111,18 +136,18 @@ namespace B16_Ex02
 
         private bool checkIfPlayerWon(int i_LastInsertedColumn)
         {
-            int lastInstertedRow = m_CurrentEmptyRowInColumn[i_LastInsertedColumn];
+            int lastInstertedRow = m_CurrentEmptyRowInColumn[i_LastInsertedColumn]-1;
             eBoardSquare currentPlayerSquare = m_GameBoard[lastInstertedRow, i_LastInsertedColumn];
             bool playerWon = checkCurrentColumn(lastInstertedRow, i_LastInsertedColumn, currentPlayerSquare);
             if (!playerWon)
             {
                 playerWon = checkCurrentRow(lastInstertedRow, i_LastInsertedColumn, currentPlayerSquare);
-                if(!playerWon)
+                if (!playerWon)
                 {
                     playerWon = checkCurrentDiagonals(lastInstertedRow, i_LastInsertedColumn, currentPlayerSquare);
                 }
             }
-           
+
             return playerWon;
         }
 
@@ -130,9 +155,9 @@ namespace B16_Ex02
         {
             bool playerWon = false;
             int maxNumberofSquaresInARow = 1;
-            for (int i = i_LastInstertedRow + 1 ; i < Rows && !playerWon;  ++i )
+            for (int i = i_LastInstertedRow + 1; i < Rows && !playerWon; ++i)
             {
-                if (m_GameBoard[i,i_LastInsertedColumn] == currentPlayerSquare)
+                if (m_GameBoard[i, i_LastInsertedColumn] == currentPlayerSquare)
                 {
                     ++maxNumberofSquaresInARow;
                 }
@@ -181,8 +206,6 @@ namespace B16_Ex02
             return playerWon;
         }
 
-
-
         public eBoardStatus BoardStatus
         {
             get
@@ -194,6 +217,15 @@ namespace B16_Ex02
         private bool isValidColumn(int i_ColumnIndex)
         {
             return i_ColumnIndex >= 0 && i_ColumnIndex < Columns;
+        }
+
+        public object Clone()
+        {
+            int[] currentEmptyRowInColumn = (int[])m_CurrentEmptyRowInColumn.Clone();
+            eBoardSquare[,] gameBoardToCopy = (eBoardSquare[,])m_GameBoard.Clone();
+            int numberOfEmptySquares = m_NumberOfEmptySquares;
+            eBoardStatus boardStatus = m_BoardStatus;
+            return new GameBoard(currentEmptyRowInColumn, gameBoardToCopy, numberOfEmptySquares, boardStatus);
         }
     }
 }

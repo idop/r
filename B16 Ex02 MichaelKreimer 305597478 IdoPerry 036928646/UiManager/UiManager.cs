@@ -13,12 +13,12 @@ namespace B16_Ex02
         public void GetBoardDimensions(out int o_Rows, out int o_Columns)
         {
             string weclomeMessage = "Welcome to the 4 in a Row game.";
-            string getDimenstionMessage = "Please enter the number of {2} you want to pay with (between {0} and {1})";
+            string getDimenstionMessage = "Please enter the number of {2} you want to play with (between {0} and {1})";
             Console.WriteLine(weclomeMessage);
             Console.WriteLine(getDimenstionMessage, GameBoard.k_MinDimensitonSize, GameBoard.k_MaxDimensitonSize, k_Rows);
-            o_Rows = GetIntegerFromUser(GameBoard.k_MinDimensitonSize, GameBoard.k_MaxDimensitonSize);
+            o_Rows = getIntegerFromUser(GameBoard.k_MinDimensitonSize, GameBoard.k_MaxDimensitonSize);
             Console.WriteLine(getDimenstionMessage, GameBoard.k_MinDimensitonSize, GameBoard.k_MaxDimensitonSize, k_Columns);
-            o_Columns = GetIntegerFromUser(GameBoard.k_MinDimensitonSize, GameBoard.k_MaxDimensitonSize);
+            o_Columns = getIntegerFromUser(GameBoard.k_MinDimensitonSize, GameBoard.k_MaxDimensitonSize);
             setBoardHeaders(o_Columns);
             setSeperatorLine(o_Columns);
         }
@@ -32,7 +32,7 @@ namespace B16_Ex02
 
         private GameUtils.eGameMode GetGameModeInput()
         {
-            int input = GetIntegerFromUser((byte)GameUtils.eGameMode.PlayerVsPlayer, (byte)GameUtils.eGameMode.PlayerVsAi);
+            int input = getIntegerFromUser((byte)GameUtils.eGameMode.PlayerVsPlayer, (byte)GameUtils.eGameMode.PlayerVsAi);
             GameUtils.eGameMode gameMode;
 
             if (input == 0)
@@ -47,6 +47,12 @@ namespace B16_Ex02
             return gameMode;
         }
 
+        public void PresentCurrentScore(string i_Player1Name, int i_Player1Score, string i_Player2Name, int i_Player2Score)
+        {
+            string message = string.Format("{0} Score is {1}, {2} Score is {3}", i_Player1Name, i_Player1Score, i_Player2Name, i_Player2Score);
+            Console.WriteLine(message);
+        }
+
         private void setSeperatorLine(int i_Columns)
         {
             StringBuilder seperatorLine = new StringBuilder((i_Columns * 2) + 2);
@@ -59,12 +65,42 @@ namespace B16_Ex02
             m_SeperatorLine = seperatorLine.ToString();
         }
 
+        public void DeclareWinner(string i_WinnerName)
+        {
+            string message = string.Format("{0} Won!!!!", i_WinnerName);
+            Ex02.ConsoleUtils.Screen.Clear();
+            Console.WriteLine(message);
+        }
+
+        public void DeclareForfit(string i_PlayerName)
+        {
+            string message = string.Format("{0} forfits the game.", i_PlayerName);
+            Ex02.ConsoleUtils.Screen.Clear();
+            Console.WriteLine(message);
+        }
+
+        public void DeclareDraw()
+        {
+            string message = "Game ended in a draw.";
+            Ex02.ConsoleUtils.Screen.Clear();
+            Console.WriteLine(message);
+        }
+
+        public bool CheckIfPplayerWantsToPlayAnotherGame()
+        {
+            string message = "Press 1 to play another game and 0 to exit";
+            int input;
+            Console.WriteLine(message);
+            input = getIntegerFromUser(GameUtils.k_playerWantsToQuit, GameUtils.k_playerWantsToPlayAnotherLevel); ;
+            return input == GameUtils.k_playerWantsToPlayAnotherLevel;
+        }
+
         private void setBoardHeaders(int i_Columns)
         {
             StringBuilder boardHeader = new StringBuilder((i_Columns * 2) + 1);
             for (int i = 0; i < i_Columns; ++i)
             {
-                boardHeader.AppendFormat(" {0}", i);
+                boardHeader.AppendFormat(" {0}", i + 1);
             }
 
             m_BoardHeader = boardHeader.ToString();
@@ -91,7 +127,7 @@ namespace B16_Ex02
             }
         }
 
-        public int GetIntegerFromUser(int i_MinValue, int i_MaxValue)
+        private int getIntegerFromUser(int i_MinValue, int i_MaxValue)
         {
             string invalidInputMessage = "invalid input please enter a number between {0} and {1} as your selection";
             int inputNumber = 0;
@@ -99,16 +135,14 @@ namespace B16_Ex02
 
             while (invalidInput)
             {
-                if (int.TryParse(Console.ReadLine(), out inputNumber))
+                if (int.TryParse(Console.ReadLine(), out inputNumber) && inputNumber >= i_MinValue && inputNumber <= i_MaxValue)
                 {
-                    if (inputNumber >= i_MinValue && inputNumber <= i_MaxValue)
-                    {
-                        invalidInput = false;
-                    }
-                    else
-                    {
-                        Console.WriteLine(invalidInputMessage, i_MinValue, i_MaxValue);
-                    }
+
+                    invalidInput = false;
+                }
+                else
+                {
+                    Console.WriteLine(invalidInputMessage, i_MinValue, i_MaxValue);
                 }
             }
 
@@ -128,7 +162,7 @@ namespace B16_Ex02
             {
                 if (char.TryParse(Console.ReadLine(), out inputChar))
                 {
-                    if (inputChar == GameUtils.k_ExitChar)
+                    if (inputChar == GameUtils.k_ForfitChar)
                     {
                         playerWantsToPlay = false;
                         invalidInput = false;
@@ -136,7 +170,7 @@ namespace B16_Ex02
                     else if (char.IsDigit(inputChar))
                     {
                         columnChoise = (int)char.GetNumericValue(inputChar);
-                        invalidInput = i_GameBoard.TryToSetColumnSquare(columnChoise, i_playerSquare);
+                        invalidInput = i_GameBoard.TryToSetColumnSquare(columnChoise - 1, i_playerSquare);
                     }
                 }
 

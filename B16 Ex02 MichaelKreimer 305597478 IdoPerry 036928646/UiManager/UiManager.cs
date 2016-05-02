@@ -91,7 +91,7 @@ namespace B16_Ex02
             string message = "Press 1 to play another game and 0 to exit";
             int input;
             Console.WriteLine(message);
-            input = getIntegerFromUser(GameUtils.k_playerWantsToQuit, GameUtils.k_playerWantsToPlayAnotherLevel); ;
+            input = getIntegerFromUser(GameUtils.k_playerWantsToQuit, GameUtils.k_playerWantsToPlayAnotherLevel);
             return input == GameUtils.k_playerWantsToPlayAnotherLevel;
         }
 
@@ -137,7 +137,6 @@ namespace B16_Ex02
             {
                 if (int.TryParse(Console.ReadLine(), out inputNumber) && inputNumber >= i_MinValue && inputNumber <= i_MaxValue)
                 {
-
                     invalidInput = false;
                 }
                 else
@@ -149,7 +148,7 @@ namespace B16_Ex02
             return inputNumber;
         }
 
-        public bool GetMoveFormUser(string i_PlayerName, GameBoard.eBoardSquare i_playerSquare, GameBoard i_GameBoard) //TODO Refactor this and fix logic
+        public bool GetMoveFormUser(string i_PlayerName, GameBoard.eBoardSquare i_playerSquare, GameBoard i_GameBoard)
         {
             string message = "Hi {0}, it's your turn. Please Choose a Valid Column or q to forfit";
             string invlaidInputMessage = "Invalid Input Please Choose a Valid Column or q to forfit";

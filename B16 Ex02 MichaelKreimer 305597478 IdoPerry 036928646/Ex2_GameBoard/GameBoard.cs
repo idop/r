@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace B16_Ex02
 {
@@ -12,6 +10,7 @@ namespace B16_Ex02
         private const char k_EmptySquare = ' ';
         private const char k_Player1Symbol = 'x';
         private const char k_Player2Symbol = 'o';
+        private const int k_SerieSize = 4;
 
         public enum eBoardSquare : byte
         {
@@ -27,6 +26,21 @@ namespace B16_Ex02
             PlayerWon
         }
 
+        public int GetFirstAvailableColumn()
+        {
+            int firstAvailableColumn = -1;
+            for (int i = 0; i < Columns; i++)
+            {
+                if (this.m_CurrentEmptyRowInColumn[i] > 0)
+                {
+                    firstAvailableColumn = i;
+                    break;
+                }
+            }
+
+            return firstAvailableColumn;
+        }
+
         private eBoardStatus m_BoardStatus;
         private eBoardSquare[,] m_GameBoard;
         private int m_NumberOfEmptySquares;
@@ -37,29 +51,6 @@ namespace B16_Ex02
             m_GameBoard = new eBoardSquare[i, j];
             m_CurrentEmptyRowInColumn = new int[j];
             ClearBoard();
-        }
-
-        public GameBoard(int[] i_CurrentEmptyRowInColumn, eBoardSquare[,] i_GameBoardSquare, int i_NumberOfEmptySquares, eBoardStatus i_BoardStatus)
-        {
-            m_CurrentEmptyRowInColumn = i_CurrentEmptyRowInColumn;
-            m_GameBoard = i_GameBoardSquare;
-            m_NumberOfEmptySquares = i_NumberOfEmptySquares;
-            m_BoardStatus = i_BoardStatus;
-        }
-
-        public void ClearBoard()
-        {
-            m_NumberOfEmptySquares = Rows * Columns;
-
-            for (int i = 0; i < Columns; ++i)
-            {
-                m_CurrentEmptyRowInColumn[i] = Rows;
-                for (int j = 0; j < Rows; ++j)
-                {
-                    m_GameBoard[j, i] = eBoardSquare.EmptySquare;
-                }
-            }
-            m_BoardStatus = eBoardStatus.NextPlayerCanPlay;
         }
 
         public eBoardSquare this[int row, int column]
@@ -86,6 +77,54 @@ namespace B16_Ex02
             }
         }
 
+        public int[] EmptyRowsInColumn
+        {
+            get
+            {
+                return m_CurrentEmptyRowInColumn;
+            }
+        }
+
+        public eBoardSquare[,] Board
+        {
+            get
+            {
+                return m_GameBoard;
+            }
+        }
+
+        public GameBoard(int[] i_CurrentEmptyRowInColumn, eBoardSquare[,] i_GameBoardSquare, int i_NumberOfEmptySquares, eBoardStatus i_BoardStatus)
+        {
+            m_CurrentEmptyRowInColumn = i_CurrentEmptyRowInColumn;
+            m_GameBoard = i_GameBoardSquare;
+            m_NumberOfEmptySquares = i_NumberOfEmptySquares;
+            m_BoardStatus = i_BoardStatus;
+        }
+
+        public eBoardStatus BoardStatus
+        {
+            get
+            {
+                return m_BoardStatus;
+            }
+        }
+
+        public void ClearBoard()
+        {
+            m_NumberOfEmptySquares = Rows * Columns;
+
+            for (int i = 0; i < Columns; ++i)
+            {
+                m_CurrentEmptyRowInColumn[i] = Rows;
+                for (int j = 0; j < Rows; ++j)
+                {
+                    m_GameBoard[j, i] = eBoardSquare.EmptySquare;
+                }
+            }
+
+            m_BoardStatus = eBoardStatus.NextPlayerCanPlay;
+        }
+
         public bool TryToSetColumnSquare(int i_ColumnIndex, eBoardSquare i_PlayerSquare)
         {
             bool isColumnFull = true;
@@ -103,24 +142,7 @@ namespace B16_Ex02
 
             return isColumnFull;
         }
-        public bool TryToSetColumnSquare2(int i_ColumnIndex, eBoardSquare i_PlayerSquare)
-        {
-            //For testing
-            bool isColumnFull = true;
-            if (isValidColumn(i_ColumnIndex))
-            {
-                if (m_CurrentEmptyRowInColumn[i_ColumnIndex] > 0)
-                {
-                    m_GameBoard[m_CurrentEmptyRowInColumn[i_ColumnIndex] - 1, i_ColumnIndex] = i_PlayerSquare;
-                    --m_NumberOfEmptySquares;
-                    setNewBoardStatus(i_ColumnIndex);
-                    --m_CurrentEmptyRowInColumn[i_ColumnIndex];
-                    isColumnFull = false;
-                }
-            }
 
-            return isColumnFull;
-        }
         private void setNewBoardStatus(int i_LastInsertedColumn)
         {
             bool playerWon = checkIfPlayerWon(i_LastInsertedColumn);
@@ -136,7 +158,7 @@ namespace B16_Ex02
 
         private bool checkIfPlayerWon(int i_LastInsertedColumn)
         {
-            int lastInstertedRow = m_CurrentEmptyRowInColumn[i_LastInsertedColumn]-1;
+            int lastInstertedRow = m_CurrentEmptyRowInColumn[i_LastInsertedColumn] - 1;
             eBoardSquare currentPlayerSquare = m_GameBoard[lastInstertedRow, i_LastInsertedColumn];
             bool playerWon = checkCurrentColumn(lastInstertedRow, i_LastInsertedColumn, currentPlayerSquare);
             if (!playerWon)
@@ -199,14 +221,14 @@ namespace B16_Ex02
             return playerWon;
         }
 
-
         private bool checkCurrentDiagonals(int i_LastInstertedRow, int i_LastInsertedColumn, eBoardSquare currentPlayerSquare)
         {
             bool playerWon = checkLeftDiagonal(i_LastInstertedRow, i_LastInsertedColumn, currentPlayerSquare);
-            if(!playerWon)
+            if (!playerWon)
             {
                 playerWon = checkRightDiagonal(i_LastInstertedRow, i_LastInsertedColumn, currentPlayerSquare);
             }
+
             return playerWon;
         }
 
@@ -219,7 +241,6 @@ namespace B16_Ex02
 
             while (diagonalRowIndex > 0 && diagonalColumnIndex < Columns && !playerWon)
             {
-
                 if (m_GameBoard[diagonalRowIndex, diagonalColumnIndex] == currentPlayerSquare)
                 {
                     ++maxNumberofSquaresInARow;
@@ -247,7 +268,7 @@ namespace B16_Ex02
 
         private int getCurrentDiagoanlUpperRightRow(int i_LastInstertedRow, int i_LastInsertedColumn)
         {
-            return Math.Min(i_LastInstertedRow + i_LastInsertedColumn, (Columns - 1)); 
+            return Math.Min(i_LastInstertedRow + i_LastInsertedColumn, Columns - 1);
         }
 
         private bool checkLeftDiagonal(int i_LastInstertedRow, int i_LastInsertedColumn, eBoardSquare currentPlayerSquare)
@@ -255,11 +276,10 @@ namespace B16_Ex02
             bool playerWon = false;
             int maxNumberofSquaresInARow = 0;
             int diagonalRowIndex = getCurrentDiagoanlUpperLeftRow(i_LastInstertedRow, i_LastInsertedColumn);
-            int diagonalColumnIndex =  getCurrentDiagoanlUpperLeftColumn(i_LastInstertedRow, i_LastInsertedColumn); 
+            int diagonalColumnIndex = getCurrentDiagoanlUpperLeftColumn(i_LastInstertedRow, i_LastInsertedColumn);
 
             while (diagonalRowIndex < Rows && diagonalColumnIndex < Columns && !playerWon)
             {
-
                 if (m_GameBoard[diagonalRowIndex, diagonalColumnIndex] == currentPlayerSquare)
                 {
                     ++maxNumberofSquaresInARow;
@@ -278,11 +298,11 @@ namespace B16_Ex02
             }
 
             return playerWon;
-    }
+        }
 
         private int getCurrentDiagoanlUpperLeftColumn(int i_LastInstertedRow, int i_LastInsertedColumn)
         {
-            return getCurrentDiagoanlUpperLeftRow(i_LastInsertedColumn , i_LastInstertedRow);
+            return getCurrentDiagoanlUpperLeftRow(i_LastInsertedColumn, i_LastInstertedRow);
         }
 
         private int getCurrentDiagoanlUpperLeftRow(int i_LastInstertedRow, int i_LastInsertedColumn)
@@ -290,17 +310,152 @@ namespace B16_Ex02
             return Math.Max(i_LastInstertedRow - i_LastInsertedColumn, 0);
         }
 
-        public eBoardStatus BoardStatus
-        {
-            get
-            {
-                return m_BoardStatus;
-            }
-        }
-
         private bool isValidColumn(int i_ColumnIndex)
         {
             return i_ColumnIndex >= 0 && i_ColumnIndex < Columns;
+        }
+
+        public bool checkRowSeriePotential(int i_RowToCheck, int i_ColumnToCheck)
+        {
+            int potentialSerieCount = 0, potentialUnderCount = 0, potentialOverCount = 0;
+            calcRowSerieCount(i_RowToCheck, i_ColumnToCheck, ref potentialOverCount, true);
+            calcRowSerieCount(i_RowToCheck, i_ColumnToCheck, ref potentialUnderCount, false);
+            potentialSerieCount = potentialOverCount + potentialUnderCount + 1; // +1 the cell is itself
+            return potentialSerieCount >= k_SerieSize;
+        }
+
+        private void calcRowSerieCount(int i_RowToCheck, int i_ColumnToCheck, ref int potentialOverCount, bool isAbove)
+        {
+            int i = 1;
+            bool legalPotentialSerie = true;
+            int mul = isAbove ? 1 : -1;
+            while (legalPotentialSerie && i_ColumnToCheck + (i * mul) < Columns && i_ColumnToCheck + (i * mul) >= 0)
+            {
+                int nextRowToCheck = 0;
+                if (Board[i_RowToCheck, i_ColumnToCheck + (i * mul)] != GameBoard.eBoardSquare.Player1Square)
+                {
+                    nextRowToCheck = i_RowToCheck + 1;
+                    if (isValidRow(nextRowToCheck) && Board[nextRowToCheck, i_ColumnToCheck + (i * mul)] == GameBoard.eBoardSquare.EmptySquare)
+                    {
+                        legalPotentialSerie = false;
+                    }
+                    else
+                    {
+                        potentialOverCount++;
+                        i++;
+                    }
+                }
+                else
+                {
+                    nextRowToCheck = i_RowToCheck - 1;
+                    if (isValidRow(nextRowToCheck) && Board[nextRowToCheck, i_ColumnToCheck + (i * mul)] == GameBoard.eBoardSquare.EmptySquare)
+                    {
+                        potentialOverCount = 0;
+                    }
+
+                    legalPotentialSerie = false;
+                }
+            }
+        }
+
+        private bool isValidRow(int i_Row)
+        {
+            return i_Row >= 0 && i_Row < Rows;
+        }
+
+        public bool IsTherePotentialSerie(int i_PotentialColumnToInsert)
+        {
+            bool hasPotential = false;
+            int rowToCheck = EmptyRowsInColumn[i_PotentialColumnToInsert] - 1;
+            if (rowToCheck >= 0)
+            {
+                hasPotential = hasPotential | checkRowSeriePotential(rowToCheck, i_PotentialColumnToInsert);
+                hasPotential = hasPotential | checkColumnSeriePotential(rowToCheck, i_PotentialColumnToInsert);
+                hasPotential = hasPotential | checkDiagonalSeriePotential(rowToCheck, i_PotentialColumnToInsert);
+            }
+
+            return hasPotential;
+        }
+
+        private bool checkDiagonalSeriePotential(int i_RowToCheck, int i_ColumnToCheck)
+        {
+            int potentialSerieCount1 = 0, potentialSerieCount2 = 0;
+            int potentialUnderCount = 0, potentialAboveCount = 0;
+
+            calcDiagonalSerieCount(i_RowToCheck, i_ColumnToCheck, out potentialAboveCount, true, true);
+            calcDiagonalSerieCount(i_RowToCheck, i_ColumnToCheck, out potentialUnderCount, false, false);
+            potentialSerieCount1 = potentialAboveCount + potentialUnderCount;
+
+            calcDiagonalSerieCount(i_RowToCheck, i_ColumnToCheck, out potentialAboveCount, false, true);
+            calcDiagonalSerieCount(i_RowToCheck, i_ColumnToCheck, out potentialUnderCount, true, false);
+            potentialSerieCount2 = potentialAboveCount + potentialUnderCount;
+
+            int maxPotentialSerie = Math.Max(potentialSerieCount1, potentialSerieCount2);
+            return maxPotentialSerie >= k_SerieSize;
+        }
+
+        private void calcDiagonalSerieCount(int i_RowToCheck, int i_ColumnToCheck, out int potentialCount, bool aboveXIndex, bool aboveYIndex)
+        {
+            int i = 0;
+            potentialCount = 0;
+            int mulX = aboveXIndex ? 1 : -1, mulY = aboveYIndex ? 1 : -1;
+            bool legalPotentialSerie = true;
+            while (legalPotentialSerie && i_ColumnToCheck + (i * mulY) < Columns && i_RowToCheck + (i * mulX) < Rows
+                   && i_ColumnToCheck + (i * mulX) >= 0 && i_RowToCheck + (i * mulY) >= 0)
+            {
+                if (Board[i_RowToCheck + (i * mulY), i_ColumnToCheck + (i * mulX)] != GameBoard.eBoardSquare.Player1Square)
+                {
+                    int nextRowtoCheck = i_RowToCheck + (i * mulY) - 1;
+                    if (isValidRow(nextRowtoCheck) && Board[nextRowtoCheck, i_ColumnToCheck + (i * mulX)] == GameBoard.eBoardSquare.EmptySquare)
+                    {
+                        legalPotentialSerie = false;
+                    }
+                    else
+                    {
+                        potentialCount++;
+                        i++;
+                    }
+                }
+                else
+                {
+                    if (i_RowToCheck == 0 || Board[i_RowToCheck + (i * mulY) - 1, i_ColumnToCheck + (i * mulX)] == GameBoard.eBoardSquare.EmptySquare)
+                    {
+                        potentialCount = 0;
+                    }
+
+                    legalPotentialSerie = false;
+                }
+            }
+        }
+
+        private bool checkColumnSeriePotential(int i_RowToCheck, int i_ColumnToCheck)
+        {
+            int potentialSerieCount = 0, potentialUnderCount = 0, potentialAboveCount = 0;
+            calcColumnSerieCount(i_RowToCheck, i_ColumnToCheck, ref potentialAboveCount, true);
+            calcColumnSerieCount(i_RowToCheck, i_ColumnToCheck, ref potentialUnderCount, false);
+            potentialSerieCount = potentialAboveCount + potentialUnderCount + 1; 
+            return potentialSerieCount >= k_SerieSize;
+        }
+
+        private void calcColumnSerieCount(int i_RowToCheck, int i_ColumnToCheck, ref int potentialCount, bool isAbove)
+        {
+            bool sameSquare = true;
+            int i = 1;
+            int mul = isAbove ? 1 : -1;
+
+            while (sameSquare && i_RowToCheck + (i * mul) < Rows && i_RowToCheck + (i * mul) >= 0)
+            {
+                int nextRowtoCheck = i_RowToCheck + (i * mul);
+                if (isValidRow(nextRowtoCheck) && Board[nextRowtoCheck, i_ColumnToCheck] != GameBoard.eBoardSquare.Player1Square)
+                {
+                    potentialCount++;
+                    i++;
+                }
+                else
+                {
+                    sameSquare = false;
+                }
+            }
         }
 
         public object Clone()

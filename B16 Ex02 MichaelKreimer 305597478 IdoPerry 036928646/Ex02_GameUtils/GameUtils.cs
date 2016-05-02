@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace B16_Ex02
+﻿namespace B16_Ex02
 {
     public class GameUtils
     {
@@ -11,6 +7,7 @@ namespace B16_Ex02
         public const char k_ForfitChar = 'q';
         public const int k_playerWantsToPlayAnotherLevel = 1;
         public const int k_playerWantsToQuit = 0;
+        public const int k_MaxEfficientDepth = 6;
 
         public enum eGameMode : byte
         {

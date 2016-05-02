@@ -1,20 +1,18 @@
-﻿using Ex02_GameUtils;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using Ex02_GameUtils;
 
 namespace B16_Ex02
 {
     internal class Ai
     {
-        TreeNode<GameBoard> root;
+        private TreeNode<GameBoard> root;
+
         public int GetNextMove(GameBoard i_GameBoard)
         {
             int indexChosen = -1;
-            root = new TreeNode<GameBoard>(i_GameBoard,0);
-            buildDesicionsTree(root,3,true); // TODO: change 5 to constant depth which will be decided later
-            int bestValue = minMax(root, 3, true);
-
+            root = new TreeNode<GameBoard>(i_GameBoard, 0);
+            buildDesicionsTree(root, GameUtils.k_MaxEfficientDepth, true);
+            int bestValue = minMax(root, GameUtils.k_MaxEfficientDepth, true);
             foreach (TreeNode<GameBoard> tNode in root.Children)
             {
                 if (tNode.Score == bestValue)
@@ -23,16 +21,69 @@ namespace B16_Ex02
                     break;
                 }
             }
+
+            foreach (TreeNode<GameBoard> tNode in root.Children)
+            {
+                int index = tNode.Index;
+                int potentialIndex;
+                bool foundPotential = tryToGetMoveWithPotentialSerie(i_GameBoard, out potentialIndex);
+                if (tNode.Score == bestValue && foundPotential)
+                {
+                    if (isIndexIsTheBestMove(root.Children, bestValue, potentialIndex))
+                    {
+                        indexChosen = potentialIndex;
+                    }
+                    else
+                    {
+                        indexChosen = tNode.Index;
+                    }
+
+                    break;
+                }
+            }
+
             return indexChosen;
         }
 
-        private void buildDesicionsTree(TreeNode<GameBoard> root, int depth,bool io_IsComputerPlaying)
+        private bool isIndexIsTheBestMove(ICollection<TreeNode<GameBoard>> children, int bestValue, int potentialIndex)
+        {
+            bool result = false;
+            foreach (TreeNode<GameBoard> gameBoard in children)
+            {
+                if (gameBoard.Index == potentialIndex && gameBoard.Score == bestValue)
+                {
+                    result = true;
+                    break;
+                }
+            }
+
+            return result;
+        }
+
+        private bool tryToGetMoveWithPotentialSerie(GameBoard i_GameBoard, out int io_IndexChosen)
+        {
+            bool foundPotential = false;
+            io_IndexChosen = -1;
+            for (int i = 0; i < i_GameBoard.Columns && !foundPotential; i++)
+            {
+                if (i_GameBoard.IsTherePotentialSerie(i))
+                {
+                    io_IndexChosen = i;
+                    foundPotential = true;
+                }
+            }
+
+            return foundPotential;
+        }
+
+        private void buildDesicionsTree(TreeNode<GameBoard> root, int depth, bool io_IsComputerPlaying)
         {
             GameBoard.eBoardSquare eBoard = io_IsComputerPlaying ? GameBoard.eBoardSquare.Player2Square : GameBoard.eBoardSquare.Player1Square;
             if (!root.Data.BoardStatus.Equals(GameBoard.eBoardStatus.NextPlayerCanPlay) || depth == 0)
             {
                 return;
             }
+
             for (int i = 0; i < root.Data.Columns; i++)
             {
                 GameBoard newBoard = (GameBoard)root.Data.Clone();
@@ -41,25 +92,22 @@ namespace B16_Ex02
                 {
                     root.AddChild(newBoard, i);
                 }
-                else
-                {
-                    Console.Beep();
-                }
             }
+
             foreach (TreeNode<GameBoard> childNode in root.Children)
             {
-                buildDesicionsTree(childNode, depth - 1,!io_IsComputerPlaying);
+                buildDesicionsTree(childNode, depth - 1, !io_IsComputerPlaying);
             }
         }
 
         private int minMax(TreeNode<GameBoard> root, int depth, bool maximizing)
         {
-            //TODO: optionalchange true and false to constants v_Maximizing / v_Minimizing
             int bestValue;
             if (!root.Data.BoardStatus.Equals(GameBoard.eBoardStatus.NextPlayerCanPlay) || depth == 0)
-            { // if game is in terminal state or no more tree levels
-                return calculateScoreForResult(root.Data,maximizing);
+            { 
+                return calculateScoreForResult(root.Data, maximizing);
             }
+
             if (maximizing == true)
             {
                 bestValue = int.MinValue;
@@ -84,23 +132,25 @@ namespace B16_Ex02
                     }
                 }
             }
+
             return bestValue;
         }
 
         private int calculateScoreForResult(GameBoard i_BoardData, bool i_IsComputerTurn)
         {
             int score = 0;
-                if (i_BoardData.BoardStatus.Equals(GameBoard.eBoardStatus.PlayerWon))
+            if (i_BoardData.BoardStatus.Equals(GameBoard.eBoardStatus.PlayerWon))
+            {
+                if (i_IsComputerTurn == false)
                 {
-                    if (i_IsComputerTurn == true)
-                    {
-                        score = 1;
-                    }
-                    else
-                    {
-                        score = -1;
-                    }
+                    score = 1;
                 }
+                else
+                {
+                    score = -1;
+                }
+            }
+
             return score;
         }
     }

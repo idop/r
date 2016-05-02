@@ -1,10 +1,13 @@
 <stylecopresultscache>
   <version>12</version>
+  <project key="-532199279">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
   <sourcecode name="UiManager.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2016/03/13 20:28:52.000</styleCop>
       <settingsFile>2016/04/23 15:34:48.101</settingsFile>
-      <sourceFile>2016/04/24 23:45:48.195</sourceFile>
+      <sourceFile>2016/05/02 19:18:20.948</sourceFile>
       <parser>2016/03/13 20:28:52.000</parser>
       <StyleCop.CSharp.DocumentationRules>2016/03/13 20:28:52.000</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1584320079</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -24,18 +27,15 @@
     <violations>
       <violation namespace="StyleCop.CSharp.SpacingRules" rule="SingleLineCommentsMustBeginWithSingleSpace" ruleCheckId="SA1005">
         <context>The comment must start with a single space. To ignore this error when commenting out a line of code, begin the comment with '////' rather than '//'.</context>
-        <line>118</line>
-        <index>4596</index>
-        <endIndex>4629</endIndex>
-        <startLine>118</startLine>
+        <line>151</line>
+        <index>5937</index>
+        <endIndex>5970</endIndex>
+        <startLine>151</startLine>
         <startColumn>120</startColumn>
-        <endLine>118</endLine>
+        <endLine>151</endLine>
         <endColumn>153</endColumn>
         <warning>False</warning>
       </violation>
     </violations>
   </sourcecode>
-  <project key="-532199279">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
 </stylecopresultscache>

@@ -39,11 +39,14 @@
       </violation>
     </violations>
   </sourcecode>
-  <sourcecode name="Program.cs" parser="StyleCop.CSharp.CsParser">
+  <project key="-1252750146">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
+  <sourcecode name="Ai.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2016/03/13 20:28:52.000</styleCop>
       <settingsFile>2016/04/23 15:34:50.129</settingsFile>
-      <sourceFile>2016/04/23 16:51:59.070</sourceFile>
+      <sourceFile>2016/05/02 19:17:30.118</sourceFile>
       <parser>2016/03/13 20:28:52.000</parser>
       <StyleCop.CSharp.DocumentationRules>2016/03/13 20:28:52.000</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1584320079</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -62,11 +65,11 @@
     </timestamps>
     <violations />
   </sourcecode>
-  <sourcecode name="Ai.cs" parser="StyleCop.CSharp.CsParser">
+  <sourcecode name="GameManager.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2016/03/13 20:28:52.000</styleCop>
       <settingsFile>2016/04/23 15:34:50.129</settingsFile>
-      <sourceFile>2016/04/23 16:58:12.064</sourceFile>
+      <sourceFile>2016/05/02 19:17:30.126</sourceFile>
       <parser>2016/03/13 20:28:52.000</parser>
       <StyleCop.CSharp.DocumentationRules>2016/03/13 20:28:52.000</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1584320079</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -89,7 +92,7 @@
     <timestamps>
       <styleCop>2016/03/13 20:28:52.000</styleCop>
       <settingsFile>2016/04/23 15:34:50.129</settingsFile>
-      <sourceFile>2016/04/24 22:21:05.217</sourceFile>
+      <sourceFile>2016/05/02 18:40:27.381</sourceFile>
       <parser>2016/03/13 20:28:52.000</parser>
       <StyleCop.CSharp.DocumentationRules>2016/03/13 20:28:52.000</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1584320079</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -108,14 +111,11 @@
     </timestamps>
     <violations />
   </sourcecode>
-  <project key="-1252750146">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
-  <sourcecode name="GameManager.cs" parser="StyleCop.CSharp.CsParser">
+  <sourcecode name="Program.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2016/03/13 20:28:52.000</styleCop>
       <settingsFile>2016/04/23 15:34:50.129</settingsFile>
-      <sourceFile>2016/04/24 23:35:23.414</sourceFile>
+      <sourceFile>2016/05/02 18:39:24.298</sourceFile>
       <parser>2016/03/13 20:28:52.000</parser>
       <StyleCop.CSharp.DocumentationRules>2016/03/13 20:28:52.000</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1584320079</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -132,29 +132,6 @@
       <StyleCop.CSharp.SpacingRules>2016/03/13 20:28:52.000</StyleCop.CSharp.SpacingRules>
       <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
     </timestamps>
-    <violations>
-      <violation namespace="StyleCop.CSharp.SpacingRules" rule="SingleLineCommentsMustBeginWithSingleSpace" ruleCheckId="SA1005">
-        <context>The comment must start with a single space. To ignore this error when commenting out a line of code, begin the comment with '////' rather than '//'.</context>
-        <line>62</line>
-        <index>1736</index>
-        <endIndex>1741</endIndex>
-        <startLine>62</startLine>
-        <startColumn>13</startColumn>
-        <endLine>62</endLine>
-        <endColumn>18</endColumn>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.SpacingRules" rule="SingleLineCommentsMustBeginWithSingleSpace" ruleCheckId="SA1005">
-        <context>The comment must start with a single space. To ignore this error when commenting out a line of code, begin the comment with '////' rather than '//'.</context>
-        <line>67</line>
-        <index>1821</index>
-        <endIndex>1826</endIndex>
-        <startLine>67</startLine>
-        <startColumn>13</startColumn>
-        <endLine>67</endLine>
-        <endColumn>18</endColumn>
-        <warning>False</warning>
-      </violation>
-    </violations>
+    <violations />
   </sourcecode>
 </stylecopresultscache>

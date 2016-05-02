@@ -1,30 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace B16_Ex02
+﻿namespace B16_Ex02
 {
     internal class Player
     {
-        private string m_name;
-        private byte m_score;
+        private string m_Name;
+        private byte m_Score;
 
         public Player(int playerNumber)
         {
-            m_name = "Player " + (playerNumber + 1);
-            m_score = 0;
+            m_Name = "Player " + (playerNumber + 1);
+            m_Score = 0;
         }
 
         public string Name
         {
             get
             {
-                return m_name;
+                return m_Name;
             }
 
             set
             {
-                m_name = value;
+                m_Name = value;
             }
         }
 
@@ -32,12 +28,12 @@ namespace B16_Ex02
         {
             get
             {
-                return (int)m_score;
+                return (int)m_Score;
             }
 
             set
             {
-                m_score = (byte)value;
+                m_Score = (byte)value;
             }
         }
     }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace B16_Ex02
+﻿namespace B16_Ex02
 {
     internal class GameManager
     {
@@ -57,10 +54,9 @@ namespace B16_Ex02
                     checkBoardStatus();
                     ++m_TurnNumber;
                 }
+
                 checkIfPlayerWantsToPlayAnotherGame();
             }
-
-
         }
 
         private void checkBoardStatus()
@@ -75,7 +71,6 @@ namespace B16_Ex02
                         m_Players[m_TurnNumber % 2].Score++;
                         m_UiManager.DeclareWinner(m_Players[m_TurnNumber % 2].Name);
                         m_UiManager.PresentCurrentScore(m_Players[0].Name, m_Players[0].Score, m_Players[1].Name, m_Players[1].Score);
-
                     }
                     else if (boardStatus == GameBoard.eBoardStatus.Draw)
                     {
@@ -97,7 +92,6 @@ namespace B16_Ex02
 
         private void checkIfPlayerWantsToPlayAnotherGame()
         {
-
             m_PlayerWantsToPlay = m_UiManager.CheckIfPplayerWantsToPlayAnotherGame();
             if (m_PlayerWantsToPlay)
             {
@@ -115,7 +109,6 @@ namespace B16_Ex02
             {
                 playComputerTurn();
             }
-
         }
 
         private void playHumanTurn()
